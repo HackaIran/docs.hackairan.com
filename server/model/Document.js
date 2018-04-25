@@ -1,33 +1,33 @@
 const db = require('./db');
 
 const documentSchema = db.Schema({
-    name : {
-        required : true,
-        type : String
+    name: {
+        required: true,
+        type: String
     },
-    text : {
-        required : true,
-        type : String
+    text: {
+        required: true,
+        type: String
     },
-    creator : {
-        required : true,
-        type : db.Schema.Types.ObjectId,
-        ref : "User"
+    creator: {
+        required: true,
+        type: db.Schema.Types.ObjectId,
+        ref: "User"
     },
-    category : {
-        required : true,
-        type : db.Schema.Types.ObjectId ,
-        ref : "Category"
+    category: {
+        required: true,
+        type: db.Schema.Types.ObjectId,
+        ref: "Category"
     },
-    createdAt : {
-        required : true,
-        type : Date,
-        default : Date.now()
+    createdAt: {
+        required: true,
+        type: Date,
+        default: Date.now()
     },
-    modifiedAt : {
-        required : true ,
-        type : Date ,
-        default : Date.now()
+    modifiedAt: {
+        required: true,
+        type: Date,
+        default: Date.now()
     }
 });
 
