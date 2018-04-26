@@ -1,9 +1,21 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'docs.hackairan.com' });
-});
+const appController = require('../server/controller/AppController')
+
+//GET index
+router.get( '/', appController.index );
+
+//GET Document
+router.get( '/doc/:id', appController.getDocument )
+
+//GET Author
+router.get( '/author/:id', appController.getAuthor )
+
+//GET Categories
+router.get('/categories', appController.getCategories )
+
+//GET Documents by CategoryID
+router.get('/category/:categoryId', appController.getDocumentsByCategory )
 
 module.exports = router;
