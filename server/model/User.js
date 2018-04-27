@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
+const md5 = require('md5');
 
 var UserSchema = new Schema({
     username: {
@@ -36,9 +37,9 @@ UserSchema.virtual('fullName').get(function () {
     return this.firstName + ' ' + this.lastName;
 })
 
-// UserSchema.virtual('gravatar').get(function () {
-//     return 'https://www.gravatar.com/avatar/' + md5(this.email);
-// })
+UserSchema.virtual('gravatar').get(function () {
+    return 'https://www.gravatar.com/avatar/' + md5(this.email);
+})
 
 UserSchema.plugin(passportLocalMongoose);
 
