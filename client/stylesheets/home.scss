@@ -13,6 +13,16 @@ body {
     background: #333;
     min-width: 200px;
     max-width: 200px;
+
+    .header {
+
+        img {
+            width: 140px;
+            margin: 30px;
+            margin-left: 24px;
+            margin-right: 36px;
+        }
+    }
 }
 
 .column.titles {

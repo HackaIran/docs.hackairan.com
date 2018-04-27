@@ -9,6 +9,9 @@ block footer
 block content
   
   .column.tags
+    .header
+      img(src="/images/logo.png", alt="HackaDocs logo")
+
   .column.titles
     .header
       input.search-documents(type="text", placeholder="Search Documents")
@@ -22,5 +25,6 @@ block content
             span= document.creator
           p= document.abstract
       - }
+      
   .column.content
 
