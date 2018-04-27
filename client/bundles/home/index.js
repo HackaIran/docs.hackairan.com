@@ -3,6 +3,7 @@ class App {
     constructor () {
         this.initializeSearchBox();
         this.initializeDocumentsList();
+        this.initializeHotKeys();
     }
 
     initializeDocumentsList () {

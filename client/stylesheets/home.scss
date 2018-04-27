@@ -13,14 +13,16 @@ body {
     background: #333;
     min-width: 200px;
     max-width: 200px;
+    transition-duration: 0.5s;
+    overflow: hidden;
 
     .header {
 
         img {
-            width: 140px;
+            width: 130px;
             margin: 30px;
-            margin-left: 24px;
-            margin-right: 36px;
+            margin-left: 27px;
+            margin-right: 43px;
         }
     }
 }
@@ -29,9 +31,11 @@ body {
     background: #f9f9f9;
     min-width: 300px;
     max-width: 300px;
+    transition-duration: 0.5s;
     border-right: 1px solid #DDD;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 
     .header {
         text-align: center;
@@ -121,6 +125,17 @@ body {
     article {
         margin: auto;
         max-width: 600px;
-        margin: 100px;
+        margin-top: 70px;
+        margin-bottom: 70px;
     }
+}
+
+body.two .column.tags {
+    min-width: 0;
+    max-width: 0;
+}
+
+body.one .column.tags, body.one .column.titles {
+    min-width: 0;
+    max-width: 0;
 }
