@@ -1,6 +1,6 @@
 module.exports = {
     db: {
         host: 'mongodb://localhost/',
-        dbname: 'docs'
+        dbname: 'hackadocs'
     }
 }

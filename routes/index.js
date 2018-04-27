@@ -2,20 +2,46 @@ const express = require('express');
 const router = express.Router();
 
 const appController = require('../server/controller/AppController')
+const userController = require('../server/controller/UserController')
 
-//GET index
-router.get( '/', appController.index );
+const setGeneralRouters = function () {
 
-//GET Document
-router.get( '/doc/:id', appController.getDocument )
+  //Render Login
+  router.get( '/login', function( req, res, err){
+    res.render('login')
+  });
 
-//GET Author
-router.get( '/author/:id', appController.getAuthor )
+  //Render Register
+  router.get( '/register', function( req, res, err){
+    res.render('register')
+  });
 
-//GET Categories
-router.get('/categories', appController.getCategories )
+  //GET index
+  router.get( '/', appController.index );
 
-//GET Documents by CategoryID
-router.get('/category/:categoryId', appController.getDocumentsByCategory )
+  //GET Document
+  router.get( '/doc/:id', appController.getDocument )
 
+  //GET Author
+  router.get( '/author/:id', appController.getAuthor )
+
+  //GET Categories
+  router.get('/categories', appController.getCategories )
+
+  //GET Documents by CategoryID
+  router.get('/category/:id', appController.getDocumentsByCategory )
+  
+};
+
+const setUserRouters = function () {
+
+  //GET myDocuments
+  router.get( '/user', userController.getMyDocuments )
+
+  //GET Document
+  router.get( '/user/document/:id', userController.getDocument )
+  
+};
+
+setGeneralRouters();
 module.exports = router;

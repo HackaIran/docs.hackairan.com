@@ -36,9 +36,9 @@ UserSchema.virtual('fullName').get(function () {
     return this.firstName + ' ' + this.lastName;
 })
 
-UserSchema.virtual('gravatar').get(function () {
-    return 'https://www.gravatar.com/avatar/' + md5(this.email);
-})
+// UserSchema.virtual('gravatar').get(function () {
+//     return 'https://www.gravatar.com/avatar/' + md5(this.email);
+// })
 
 UserSchema.plugin(passportLocalMongoose);
 

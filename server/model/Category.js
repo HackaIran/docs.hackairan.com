@@ -6,7 +6,6 @@ const categorySchema = db.Schema({
         type : String
     },
     tags : {
-        required : false ,
         type : [String] ,
         default : []
     }
