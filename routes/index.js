@@ -17,10 +17,10 @@ const setGeneralRouters = function () {
   });
   
   // route for register action
-  router.post('/register', user.doRegister);
+  router.post('/register', userController.doRegister);
 
   // route for login action
-  router.post('/login', user.doLogin);  
+  router.post('/login', userController.doLogin);  
 
   //GET index
   router.get( '/', appController.index );
