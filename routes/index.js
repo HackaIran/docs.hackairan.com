@@ -15,6 +15,12 @@ const setGeneralRouters = function () {
   router.get( '/register', function( req, res, err){
     res.render('register')
   });
+  
+  // route for register action
+  router.post('/register', user.doRegister);
+
+  // route for login action
+  router.post('/login', user.doLogin);  
 
   //GET index
   router.get( '/', appController.index );
@@ -40,6 +46,12 @@ const setUserRouters = function () {
 
   //GET Document
   router.get( '/user/document/:id', userController.getDocument )
+
+  //GET CreateDocument
+  router.get( '/user/createdocument', userController.createDocument )
+
+  //Logout
+  router.get('/user/logout', userController.logout )
   
 };
 
