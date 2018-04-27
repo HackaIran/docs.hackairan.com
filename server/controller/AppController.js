@@ -6,7 +6,17 @@ const Category = require('../model/Category');
 
 appController.index = function (req, res) {
     
-    res.render('index')
+    // loading all documents
+    const documents = [
+        {
+            title: 'Open-Source Guideline',
+            creator: 'Mohammad H. Shahin',
+            date: '2018-06-29',
+            abstract: 'short of description of this guideline is something like this. as you can see sometimes its longer than what you think!'
+        }
+    ]
+
+    res.render('index', { documents: documents })
 }
 
 appController.getDocument = function (req, res){
