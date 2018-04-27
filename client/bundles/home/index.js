@@ -2,6 +2,28 @@ class App {
 
     constructor () {
         this.initializeSearchBox();
+        this.initializeDocumentsList();
+    }
+
+    initializeDocumentsList () {
+        const allListItems = $$('body > div.column.titles > ul > li');
+        const that = this;
+        for (let item of allListItems) {
+            item.onclick = function () {
+                that.selectDocument(this.getAttribute('data-id'))
+            }
+        }
+    }
+
+    selectDocument (id) {
+        const allListItems = $$('body > div.column.titles > ul > li');
+        for (let item of allListItems) {
+            if (item.getAttribute('data-id') === id) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active')
+            }
+        }
     }
 
     initializeSearchBox () {
