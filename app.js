@@ -27,7 +27,6 @@ app.use(cookieParser());
 app.use(sassMiddleware({
   src: path.join(__dirname, 'client'),
   dest: path.join(__dirname, 'dist'),
-  debug: true,
   outputStyle: 'compressed',
 }))
 app.use(express.static(path.join(__dirname, 'dist')));
