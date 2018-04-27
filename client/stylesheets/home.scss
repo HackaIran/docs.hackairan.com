@@ -44,6 +44,7 @@ body {
         list-style: none;
         margin: 0;
         padding: 0;
+        overflow-y: auto;
 
         li {
             padding: 30px;
@@ -51,6 +52,10 @@ body {
             border-bottom: 1px solid #DDD;
             position: relative;
             cursor: pointer;
+
+            &.hidden {
+                display: none;   
+            }
 
             &:before {
                 content: ' ';

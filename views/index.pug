@@ -3,12 +3,15 @@ extends layout
 block head
   link(rel="stylesheet", href="/stylesheets/home.css")
 
+block footer
+  script(src='/javascripts/home.bundle.js')
+
 block content
   
   .column.tags
   .column.titles
     .header
-      input(type="text", placeholder="Search Documents")
+      input.search-documents(type="text", placeholder="Search Documents")
     ul
       - for (let document of documents) {
         li(data-id=document.id)
