@@ -117,4 +117,10 @@ body {
 .column.content {
     background: white;
     flex-grow: 1;
+
+    article {
+        margin: auto;
+        max-width: 600px;
+        margin: 100px;
+    }
 }
