@@ -16,7 +16,6 @@ class App {
     }
 
     columnsPreview (type) {
-        console.log(type)
         for (let i = 1; i <= 3; i++) $('body').classList.remove('divide-' + i);
         $('body').classList.add('divide-' + type);
     }
