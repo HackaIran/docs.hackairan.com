@@ -9,7 +9,7 @@ const documentSchema = db.Schema({
         required: true,
         type: String
     },
-    creator: {
+    author: {
         required: true,
         type: db.Schema.Types.ObjectId,
         ref: "User"
