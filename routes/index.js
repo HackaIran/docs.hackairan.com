@@ -25,8 +25,8 @@ const setGeneralRouters = function () {
   //GET index
   router.get( '/', appController.index );
 
-  //GET Document
-  router.get( '/doc/:id', appController.getDocument )
+  //GET Document text by uniqueUrl
+  router.get( '/getTextByUniqueUrl/:uniqueUrl', appController.getTextByUniqueUrl )
 
   //GET Author
   router.get( '/author/:id', appController.getAuthor )
@@ -36,6 +36,7 @@ const setGeneralRouters = function () {
 
   //GET Documents by CategoryID
   router.get('/category/:id', appController.getDocumentsByCategory )
+
   
 };
 
