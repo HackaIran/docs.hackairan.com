@@ -65,6 +65,7 @@ body {
             padding-left: 40px;
             border-bottom: 1px solid #DDD;
             position: relative;
+            min-width: 230px;
             cursor: pointer;
 
             &.hidden {
@@ -130,12 +131,12 @@ body {
     }
 }
 
-body.two .column.tags {
+body.divide-2 .column.tags {
     min-width: 0;
     max-width: 0;
 }
 
-body.one .column.tags, body.one .column.titles {
+body.divide-1 .column.tags, body.one .column.titles {
     min-width: 0;
     max-width: 0;
 }

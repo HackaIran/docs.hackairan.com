@@ -8,13 +8,16 @@ class App {
 
     initializeHotKeys () {
         window.addEventListener('keydown', (e) => {
-            if (e.altKey && ['Digit1', 'Digit2', 'Digit3'].includes(e.code)) {
-                document.body.classList.remove('one')
-                document.body.classList.remove('two')
-                if (e.code === 'Digit1') document.body.classList.add('one');
-                if (e.code === 'Digit2') document.body.classList.add('two');
+            const digits = ['Digit1', 'Digit2', 'Digit3'];
+            if (e.altKey && digits.includes(e.code)) {
+                this.columnsPreview(digits.indexOf(e.code) + 1)
             }
         })
+    }
+
+    columnsPreview (type) {
+        for (let i = 1; i <= 3; i++) $('body').classList.remove('divide-' + i);
+        $('body').classList.add('divide-' + type);
     }
 
     initializeDocumentsList () {
