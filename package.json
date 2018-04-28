@@ -47,5 +47,12 @@
   "bugs": {
     "url": "https://github.com/hackairan/docs.hackairan.com/issues"
   },
-  "homepage": "https://github.com/hackairan/docs.hackairan.com#readme"
+  "homepage": "https://github.com/hackairan/docs.hackairan.com#readme",
+  "nodemonConfig": {
+    "ignore": [
+      "dist/*",
+      "client/*",
+      "views/*"
+    ]
+  }
 }
