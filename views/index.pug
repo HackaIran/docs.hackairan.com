@@ -31,13 +31,13 @@ block content
       input.search-documents(type="text", placeholder="Search Documents")
     ul
       - for (let document of documents) {
-        li(data-id=document.id)
-          h3= document.title
+        li(data-id=document.uniqueUrl)
+          h3= document.name
           span
-            time= document.date
+            time= document.modifiedAt
             span  | 
             span= document.author
-          p= document.abstract
+          p= document.summary
       - }
 
   .column.content

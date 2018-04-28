@@ -3,42 +3,29 @@ const Document = require('../model/Document');
 const mongoose = require('mongoose');
 const User = require('../model/User');
 const Category = require('../model/Category');
+const moment = require('moment');
 
 appController.index = function (req, res) {
     
     // loading all documents
-    const documents = [
-        {
-            id: 'open-source',
-            title: 'Open-Source Guideline',
-            author: 'Mohammad H. Shahin',
-            date: '2018-06-29',
-            abstract: 'short of description of this guideline is something like this. as you can see sometimes its longer than what you think!'
-        },
-        {
-            id: 'gpl3',
-            title: 'Getting deep in GPL-3',
-            author: 'Mohammad H. Shahin',
-            date: '2018-07-22',
-            abstract: 'GPL-3 is a famous license, In this article we will asses it deeply!'
-        },
-        {
-            id: 'how-to-work-with-nerdpitch',
-            title: 'How to work with NerdPitch',
-            author: 'Pouya MozaffarMagham',
-            date: '2018-03-11',
-            abstract: 'NerdPitch is the most beloved tool for sharing knowledge and ideas. Let\'s see how it excatly works!'
-        },
-        {
-            id: 'why-we-held-hackademy',
-            title: 'Why we held Hackademy behind the certain?',
-            author: 'Alireza Sheikholmolouki',
-            date: '2019-01-01',
-            abstract: 'After one year of holding Hackademy, there are some secrets to leak about why we excatly held hackademy.'
+    Document.find({}).populate('author').populate('category').exec(function(err, result){
+        let documents = [];
+        for(let item of result){
+            console.log(item.modifiedAt)
+            documents.push({
+                uniqueUrl: item.uniqueUrl,
+                name: item.name,
+                author: item.author.fullName,
+                category: item.category.title,
+                summary: item.summary,
+                modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+            })
         }
-    ]
+        res.render('index', { documents: documents })
+    });
 
-    res.render('index', { documents: documents })
+
+    
 }
 
 appController.getDocument = function (req, res){
