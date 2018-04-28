@@ -49,7 +49,7 @@ userController.logout = function(req, res) {
     res.redirect('/login');
 };
 
-// create presentation page
+// create Document page
 userController.createDocument = function(req, res) {
     
     // redirects to /login if user hasn't logged in yet

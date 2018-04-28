@@ -90,4 +90,23 @@ appController.getDocumentsByCategory = function (req, res) {
     res.json(documents);
 }
 
+appController.getDocumentsByTag = function(req, res){
+    let documents = [];
+    Document.find({}).populate('category').exec(function(err, res){
+        for(let item of res){
+            if(item.category.tags.includes(req.params.tag)){
+                documents.push({
+                    uniqueUrl: item.uniqueUrl,
+                    name: item.name,
+                    author: item.author.fullName,
+                    category: item.category.title,
+                    summary: item.summary,
+                    modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+                });
+            }
+        }
+    });
+    res.json(documents);
+}
+
 module.exports = appController;

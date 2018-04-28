@@ -31,10 +31,12 @@ const setGeneralRouters = function () {
   //GET Author
   router.get( '/author/:id', appController.getAuthor )
 
-  //GET Documents by CategoryID
+  //GET Documents by Category
   router.get('/category/:name', appController.getDocumentsByCategory )
 
-  
+  //GET Documents by Tag
+  router.get('/category/:tag', appController.getDocumentsByTag );
+
 };
 
 const setUserRouters = function () {
