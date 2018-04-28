@@ -10,7 +10,7 @@ class App {
         window.addEventListener('keydown', (e) => {
             const digits = ['Digit1', 'Digit2', 'Digit3'];
             if (e.altKey && digits.includes(e.code)) {
-                this.columnsPreview(digits.indexOf(e.code) + 1)
+                this.columnsPreview(parseInt(digits.indexOf(e.code)) + 1)
             }
         })
     }
