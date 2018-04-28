@@ -3,7 +3,8 @@ const db = require('./db');
 const categorySchema = db.Schema({
     title : {
         required : true,
-        type : String
+        type : String,
+        unique: true
     },
     tags : {
         type : [String] ,
