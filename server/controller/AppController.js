@@ -71,26 +71,23 @@ appController.getAuthor = function (req, res) {
     });
 }
 
-appController.getCategories = function (req, res) {
-    Category.find(function (err, result) {
-        if (!err) {
-            res.json(result)
-        } else {
-            res.render('error')
-        }
-    })
-}
-
 appController.getDocumentsByCategory = function (req, res) {
-    Document.find({
-        category: mongoose.Types.ObjectId(req.params.id)
-    }, function (err, result) {
-        if (!err) {
-            res.json(result)
-        } else {
-            res.render('error')
+    let documents = [];
+    Document.find({}).populate('category').exec(function(err, res){
+        for(let item of res){
+            if(item.category.name == req.params.name){
+                documents.push({
+                    uniqueUrl: item.uniqueUrl,
+                    name: item.name,
+                    author: item.author.fullName,
+                    category: item.category.title,
+                    summary: item.summary,
+                    modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+                });
+            }
         }
     });
+    res.json(documents);
 }
 
 module.exports = appController;

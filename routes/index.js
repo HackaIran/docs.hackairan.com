@@ -1,6 +1,6 @@
+
 const express = require('express');
 const router = express.Router();
-
 const appController = require('../server/controller/AppController')
 const userController = require('../server/controller/UserController')
 
@@ -31,11 +31,8 @@ const setGeneralRouters = function () {
   //GET Author
   router.get( '/author/:id', appController.getAuthor )
 
-  //GET Categories
-  router.get('/categories', appController.getCategories )
-
   //GET Documents by CategoryID
-  router.get('/category/:id', appController.getDocumentsByCategory )
+  router.get('/category/:name', appController.getDocumentsByCategory )
 
   
 };
