@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../model/User");
+var Document = require('../model/Document');
 
 
 var userController = {};
@@ -11,8 +12,18 @@ userController.home = function(req, res) {
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
-    // otherwise it renders home view
-    res.render('user', { user: req.user, url: 'home', title: 'Home' });
+    let userDocuments = [];
+    Document.find({}).populate('author').exec(function(err, res){
+        for(let item of res){
+            if(item.author.username == req.user.username){
+                userDocuments.push(item)
+            }
+        }
+        // otherwise it renders home view
+        res.render('user/home', { user: req.user, url: 'home', title: 'Home', documents: userDocuments });
+    });
+
+    
 
 };
 
@@ -59,5 +70,77 @@ userController.createDocument = function(req, res) {
     res.render('/createDocument', { user: req.user});
 
 };
+
+//create Document
+userController.doCreateDocument = function(req, res){
+
+    // redirects to /login if user hasn't logged in yet
+    if (!req.isAuthenticated()) return res.redirect('/login');
+
+    // create new document if logged in
+    let newDocument = new Document(
+        {
+            uniqueUrl: req.body.uniqueUrl,
+            name: req.body.name,
+            author: mongoose.Types.ObjectId(req.user._id),
+            category: mongoose.Types.ObjectId(req.body.categoryId),
+            summary: req.body.summary,
+            text: req.body.text
+        }
+    );
+
+    newDocument.save(function(err, result){
+        if(err){res.json({status: 500,text: err})}
+
+        res.json({
+            status: 200,
+            text: ''
+        });
+    })
+
+};
+
+userController.editDocument = function(req, res){
+    // redirects to /login if user hasn't logged in yet
+    if (!req.isAuthenticated()) return res.redirect('/login');
+
+    Document.findOne({uniqueUrl: req.params.uniqueUrl}, function(err, res){
+        
+        if(err){ return res.render('error') }
+
+        // otherwise it renders new presentation view
+        res.render('/editDocument', { user: req.user, document: res});
+
+    })
+    
+}
+
+userController.doEditDocument = function(req, res){
+    
+    // redirects to /login if user hasn't logged in yet
+    if (!req.isAuthenticated()) return res.redirect('/login');
+
+    Document.findOneAndUpdate({uniqueUrl: req.uniqueUrl},
+        {
+            uniqueUrl: req.body.uniqueUrl,
+            name: req.body.name,
+            summary: req.body.summary,
+            text: req.body.text,
+            modifiedAt: Date.now()
+        }
+    ,function(err, doc, res){
+        if(!err){
+            res.json({
+                status: 200,
+            });
+        }else{
+            res.json({
+                status: 500,
+            });
+        }
+    });
+
+    
+}
 
 module.exports = userController;

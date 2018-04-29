@@ -42,13 +42,19 @@ const setGeneralRouters = function () {
 const setUserRouters = function () {
 
   //GET myDocuments
-  router.get( '/user', userController.getMyDocuments )
-
-  //GET Document
-  router.get( '/user/document/:id', userController.getDocument )
+  router.get( '/user', userController.home )
 
   //GET CreateDocument
   router.get( '/user/createdocument', userController.createDocument )
+
+  //POST doCreateDocument
+  router.post( '/user/doCreateDocument', userController.doCreateDocument );
+
+  //GET editDocument page
+  router.get( '/user/editDocument/:uniqueUrl', userController.editDocument )
+
+  //POST doEditDocument
+  router.post( '/user/doEditDocument', userController.doEditDocument )
 
   //Logout
   router.get('/user/logout', userController.logout )
@@ -56,4 +62,6 @@ const setUserRouters = function () {
 };
 
 setGeneralRouters();
+setUserRouters();
+
 module.exports = router;
