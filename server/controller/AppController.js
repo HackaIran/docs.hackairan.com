@@ -8,7 +8,7 @@ const moment = require('moment');
 appController.index = function (req, res) {
 
     Promise.all([
-        Document.find({}).populate('author').populate('category'),
+        Document.find({isActive: true}).populate('author').populate('category'),
         Category.find({}),
     ]).then(([documentResult , categoryResult]) => {
         
@@ -45,7 +45,8 @@ appController.index = function (req, res) {
 
 appController.getTextByUniqueUrl = function (req, res) {
     Document.findOne({
-        uniqueUrl: req.params.uniqueUrl
+        uniqueUrl: req.params.uniqueUrl,
+        isActive: true
     }, function (err, result) {
         if (err || !result) {
             res.json({
@@ -73,7 +74,7 @@ appController.getAuthor = function (req, res) {
 
 appController.getDocumentsByCategory = function (req, res) {
     let documents = [];
-    Document.find({}).populate('category').exec(function(err, res){
+    Document.find({isActive: true}).populate('category').exec(function(err, res){
         for(let item of res){
             if(item.category.name == req.params.name){
                 documents.push({
@@ -92,7 +93,7 @@ appController.getDocumentsByCategory = function (req, res) {
 
 appController.getDocumentsByTag = function(req, res){
     let documents = [];
-    Document.find({}).populate('category').exec(function(err, res){
+    Document.find({isActive: true}).populate('category').exec(function(err, res){
         for(let item of res){
             if(item.category.tags.includes(req.params.tag)){
                 documents.push({

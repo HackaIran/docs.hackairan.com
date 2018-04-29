@@ -58,6 +58,9 @@ const setUserRouters = function () {
 
   //Logout
   router.get('/user/logout', userController.logout )
+
+  //POST delete document
+  router.post('/user/deleteDocument', userController.deleteDocument)
   
 };
 

@@ -62,6 +62,11 @@ const documentSchema = db.Schema({
         required: true,
         type: Date,
         default: Date.now()
+    },
+    isActive: {
+        required: true,
+        type: Boolean,
+        default: true
     }
 });
 

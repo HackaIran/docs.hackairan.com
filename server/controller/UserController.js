@@ -13,7 +13,7 @@ userController.home = function(req, res) {
     if (!req.isAuthenticated()) return res.redirect('/login');
 
     let userDocuments = [];
-    Document.find({}).populate('author').exec(function(err, res){
+    Document.find({isActive: true}).populate('author').exec(function(err, res){
         for(let item of res){
             if(item.author.username == req.user.username){
                 userDocuments.push(item)
@@ -67,7 +67,7 @@ userController.createDocument = function(req, res) {
     if (!req.isAuthenticated()) return res.redirect('/login');
 
     // otherwise it renders new presentation view
-    res.render('/createDocument', { user: req.user});
+    res.render('/user/createDocument', { user: req.user});
 
 };
 
@@ -100,6 +100,7 @@ userController.doCreateDocument = function(req, res){
 
 };
 
+//renders edit Document page
 userController.editDocument = function(req, res){
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
@@ -109,12 +110,13 @@ userController.editDocument = function(req, res){
         if(err){ return res.render('error') }
 
         // otherwise it renders new presentation view
-        res.render('/editDocument', { user: req.user, document: res});
+        res.render('/user/editDocument', { user: req.user, document: res});
 
     })
     
 }
 
+//edits document
 userController.doEditDocument = function(req, res){
     
     // redirects to /login if user hasn't logged in yet
@@ -141,6 +143,25 @@ userController.doEditDocument = function(req, res){
     });
 
     
+}
+
+//delete document
+userController.deleteDocument = function(req, res){
+
+    // redirects to /login if user hasn't logged in yet
+    if (!req.isAuthenticated()) return res.redirect('/login');
+
+    Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},{isActive: false},function(err, doc, result){
+        if(err){
+            res.json({
+                status: 500
+            })
+        }else{
+            res.json({
+                status: 200
+            })
+        }
+    })
 }
 
 module.exports = userController;
