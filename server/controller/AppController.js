@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = require('../model/User');
 const Category = require('../model/Category');
 const moment = require('moment');
+const showdown = require('showdown');
 
 appController.index = function (req, res) {
 
@@ -54,9 +55,10 @@ appController.getTextByUniqueUrl = function (req, res) {
                 text: ''
             })
         } else {
+            let converter = new showdown.Converter();
             res.json({
                 status: 200,
-                text: result.text
+                text: converter.makeHtml(result.text)
             })
         }
     })
