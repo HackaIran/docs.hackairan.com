@@ -13,7 +13,7 @@ const setGeneralRouters = function () {
 
   //Render Register
   router.get( '/register', function( req, res, err){
-    res.render('register')
+    res.render('register', { message: 'signUp'})
   });
   
   // route for register action

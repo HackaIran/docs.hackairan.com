@@ -4,6 +4,10 @@ block content
   .form-container
     form(role='form', action="/register",method="post")
       h2 Sign Up here
+      - if(message){ 
+        h4= message 
+      -} 
+
       input(type='text', name="firstname", placeholder='Your Firstname')
       input(type='text', name="lastname", placeholder='Your Lastname')
       input(type='text', name="username", placeholder='Your Username')

@@ -29,6 +29,9 @@ userController.home = function(req, res) {
 
 // Post registration
 userController.doRegister = function(req, res) {
+
+    console.log(req.body)
+
     const data = {
         username : req.body.username,
         firstName: req.body.firstname,
@@ -36,9 +39,9 @@ userController.doRegister = function(req, res) {
         avatar: req.body.avatar || null,
         email: req.body.email
     }
-    User.register(new User(data), req.body.password, function(err, user) {
+    User.register(data, req.body.password, function(err, user) {
         if (err) {
-            return res.render('/register', { user: user, url: 'register', title: 'Register' });
+            return res.render('register', { message: err });
         }
 
         passport.authenticate('local')(req, res, function () {
