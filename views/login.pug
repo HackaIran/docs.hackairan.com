@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .form-container
+    form(role='form', action='/login', method='post')
+      h2 Please sign in
+      input(type='hidden', name='redirect', value=redirect)
+      input(type='text', name='username', id='inputEmail', placeholder='Username', required, autofocus)
+      input(type='password', name='password', id='inputPassword', placeholder='Password')
+      button(type='submit') LOGIN
