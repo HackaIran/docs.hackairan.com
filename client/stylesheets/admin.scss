@@ -1,0 +1,275 @@
+body {
+    background: #EEE;
+    color: #333;
+}
+
+nav {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    background: #333;
+    list-style: none;
+    align-items: center;
+    justify-content: flex-end;
+
+    li:first-child {
+        margin-right: auto;
+
+        img {
+            height: 30px;
+            margin-top: 5px;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+    }
+
+    li:not(:first-child) {
+        align-self: stretch;
+        background: rgba(255, 255, 255, 0.05);
+        display: inline-block;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            height: 100%;
+            padding-right: 20px;
+            padding-left: 20px;
+            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    li.logged-in-user {
+
+        img.avatar {
+            height: 60px;
+        }
+    }
+
+
+}
+
+.form-container {
+    text-align: center;
+    padding-top: 30px;
+
+    form {
+        display: inline-block;
+        text-align: center;
+        padding-bottom: 40px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    input {
+        display: block;
+        font-size: 16px;
+        background: #CCC;
+        border: none;
+        width: 200px;
+        padding: 15px;
+        margin: 10px;
+        outline: none;
+        transition-duration: 0.5s;
+
+        &:focus {
+            background: #FFF;
+        }
+    }
+
+    button {
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+        padding: 10px 30px;
+        background: darken(slategrey, 20%);
+        color: white;
+        transition-duration: 0.2s;
+        outline: none;
+
+        &:hover {
+            background: slategrey;
+        }
+    }
+
+    &.new-document form {
+        display: flex;
+        flex-direction: column;
+        padding: 40px;
+        padding-top: 20px;
+        padding-bottom: 60px;
+
+        h2 {
+            text-align: center;
+        }
+        
+        input {
+            width: 400px;
+        }
+        
+        textarea {
+            display: block;
+            font-size: 16px;
+            background: #CCC;
+            border: none;
+            padding: 2%;
+            margin: 10px;
+            outline: none;
+            transition-duration: 0.5s;
+            align-self: stretch;
+            height: 400px;
+
+            &:focus {
+                background: #FFF;
+            }
+        }
+
+        form {
+            display: block;
+            text-align: left;
+        }
+        
+        button {
+            margin: 10px;
+            align-self: flex-start;
+        }
+    }
+}
+
+.empty {
+    text-align: center;
+    margin-top: 170px;
+    margin-bottom: 100px;
+
+    h2 {
+
+        span {
+            color: #CCC;
+            display: block;
+            font-weight: normal;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: #f93c36;
+            font-size: 17px;
+            font-weight: normal;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition-duration: 0.2s;
+
+            &:hover {
+                background: #ff412e;
+                transform: scale(1.08)
+            }
+    
+            &:active {
+                transform: scale(1)
+            }
+        }
+    }
+}
+
+.documents {
+    display: flex;
+    flex-wrap: wrap;
+
+    .item {
+        display: inline-block;
+        width: 300px;
+        height: 200px;
+        margin: 50px;
+        margin-right: 0;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+        position: relative;
+
+        &.new {
+            width: 294px;
+            height: 194px;
+            border: 3px dashed #AAA;
+            background: rgba(255, 255, 255, 0.01);
+            position: relative;
+            transition-duration: 0.3s;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.09);
+            }
+
+            h2 {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                margin: 0;
+                padding: 0;
+                font-size: 130px;
+                color: white;
+                font-weight: 100;
+            }
+        }
+        
+        .thumbnail {
+            width: 100%;
+            height: 130px;
+            background: url('/images/thumbnail.jpg');
+            background-size: cover;
+        }
+
+        & > h2 {
+            margin: 20px;
+            padding: 0;
+        }
+
+        & > .show {
+            position: absolute;
+            bottom: 21px;
+            right: 20px;
+            color: white;
+            text-decoration: none;
+            background: #f43b35;
+            padding: 6px 10px;
+            border-radius: 5px;
+            transition-duration: 0.3s;
+
+            &:hover {
+                background: #fa6660;
+            }
+        }
+    }
+}
+
+.home {
+    padding: 60px;
+
+    .welcome {
+        text-align: center;
+
+        img {
+            width: 100px;
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-weight: 200;
+            margin: 15px;
+            font-size: 25px;
+
+            span {
+                font-weight: normal;
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    title= title + ' | HackaDocs Panel'
+    link(rel="stylesheet", href="/stylesheets/vendor.css")
+    link(rel="stylesheet", href="/stylesheets/admin.css")
+  body
+    nav
+      li
+        a(href='/user')
+          img(src="/images/logo.png", alt="HackaDocs Logo")
+      if (!user)
+
+        if (url !== 'login')
+          li
+            a(href='/login') Login
+
+        if (url !== 'register')
+          li
+            a(href='/register') Register
+
+      if (user)
+        li
+          a(href='/logout') Logout
+        li.logged-in-user
+          img.avatar(src=user.gravatar, alt=user.fullName + "'s Gravatar")
+    div.container
+      div.content
+        block content
+    script(src='javascripts/vendor.bundle.js')
