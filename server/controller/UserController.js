@@ -13,8 +13,8 @@ userController.home = function(req, res) {
     if (!req.isAuthenticated()) return res.redirect('/login');
 
     let userDocuments = [];
-    Document.find({isActive: true}).populate('author').exec(function(err, res){
-        for(let item of res){
+    Document.find({isActive: true}).populate('author').exec(function(err, result){
+        for(let item of result){
             if(item.author.username == req.user.username){
                 userDocuments.push(item)
             }
@@ -36,7 +36,7 @@ userController.doRegister = function(req, res) {
         username : req.body.username,
         firstName: req.body.firstname,
         lastName: req.body.lastname,
-        avatar: req.body.avatar || null,
+        avatar: req.body.avatar || '',
         email: req.body.email
     }
     User.register(data, req.body.password, function(err, user) {
