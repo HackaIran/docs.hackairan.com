@@ -1,14 +1,18 @@
 const db = require('./db');
 
 const categorySchema = db.Schema({
-    title : {
+    title: {
         required : true,
         type : String,
         unique: true
     },
-    tags : {
+    tags: {
         type : [String] ,
         default : []
+    },
+    isActive: {
+        required: true,
+        type: Boolean
     }
 });
 

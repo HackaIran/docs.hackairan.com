@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .form-container
+        .form
+            h2 Create a document
+            input(type='text', name='name', placeholder='Enter title')
+            select(name="category" placeholder="select category")
+                -for(let i  = 0; i < categories.length; i++)
+                    option(value=categories[i]._id)=categories[i].title 
+            textarea(name='content', placeholder='Paste md text here')
+            textarea(name='summary', placeholder='Enter summary here').summary
+            input(type='text', name='url', placeholder='Enter Unique Path, Like: how-volcano-works').u-url
+            .error-holder
+            button.submit Create
+    
+    script(src="/javascripts/createDocument.js")
+

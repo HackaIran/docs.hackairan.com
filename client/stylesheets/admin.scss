@@ -56,16 +56,26 @@ nav {
 }
 
 .form-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
     text-align: center;
-    padding-top: 30px;
+    padding: 30px 20px 0px 20px;
 
     form {
         display: inline-block;
         text-align: center;
         padding-bottom: 40px;
+        width: 100%;
     }
-
+    .form {
+        display: inline-block;
+        text-align: center;
+        padding-bottom: 40px;
+        width: 100%;
+    }
     h2 {
+        text-align: center;
         font-size: 30px;
     }
 
@@ -74,7 +84,7 @@ nav {
         font-size: 16px;
         background: #CCC;
         border: none;
-        width: 200px;
+        width: 400px;
         padding: 15px;
         margin: 10px;
         outline: none;
@@ -84,6 +94,50 @@ nav {
             background: #FFF;
         }
     }
+
+    .u-url{
+        width: 30%;
+    }
+
+    select {
+        display: block;
+        font-size: 16px;
+        background: #CCC;
+        border: none;
+        width: 250px;
+        padding: 15px;
+        margin: 10px;
+        outline: none;
+        transition-duration: 0.5s;
+
+        &:focus {
+            background: #FFF;
+        }
+    }
+
+    textarea {
+        display: block;
+        font-size: 16px;
+        background: #CCC;
+        border: none;
+        padding: 2%;
+        margin: 10px;
+        outline: none;
+        transition-duration: 0.5s;
+        align-self: stretch;
+        height: 400px;
+        width: 80%;
+        max-width: 80%;
+
+        &:focus {
+            background: #FFF;
+        }
+    }
+
+    .summary{
+        height: 120px;
+    }
+
 
     button {
         font-size: 17px;
@@ -100,48 +154,11 @@ nav {
         }
     }
 
-    &.new-document form {
-        display: flex;
-        flex-direction: column;
-        padding: 40px;
-        padding-top: 20px;
-        padding-bottom: 60px;
-
-        h2 {
-            text-align: center;
-        }
-        
-        input {
-            width: 400px;
-        }
-        
-        textarea {
-            display: block;
-            font-size: 16px;
-            background: #CCC;
-            border: none;
-            padding: 2%;
-            margin: 10px;
-            outline: none;
-            transition-duration: 0.5s;
-            align-self: stretch;
-            height: 400px;
-
-            &:focus {
-                background: #FFF;
-            }
-        }
-
-        form {
-            display: block;
-            text-align: left;
-        }
-        
-        button {
-            margin: 10px;
-            align-self: flex-start;
-        }
+    .error-holder{
+        display: none;
+        margin: 10px;
     }
+    
 }
 
 .empty {
@@ -271,5 +288,36 @@ nav {
                 font-weight: normal;
             }
         }
+    }
+}
+
+.my-documents{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 30px 20px 0px 20px;
+    & > .document-item{
+        width: 24%;
+        height: 400px;
+        margin-right: 20px;
+        background: #333;
+        margin-bottom: 20px;
+
+        @media screen and (max-width: 1200px) {
+            width: 30%;
+        }
+
+        @media screen and (max-width: 900px) {
+            width: 45%;
+        }
+
+        @media screen and (max-width: 500px) {
+            width: 100%;
+        }
+
+        
+        color: white;
+        
     }
 }

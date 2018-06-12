@@ -16,7 +16,7 @@ appController.index = function (req, res) {
         //handling Documents
         let documents = [];
         for (let item of documentResult) {
-
+            console.log(item)
             documents.push({
                 uniqueUrl: item.uniqueUrl,
                 name: item.name,

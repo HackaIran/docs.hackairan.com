@@ -1,6 +1,10 @@
 extends layout
 
 block content
-    .home
-        .welcome
-            h1!= 'Welcome <span>' + user.firstName + '!</span>'
+    h1 my documents
+    .my-documents
+        -for(let i = 0; i < userDocs.length; i++)
+            .document-item
+                .doc-title= userDocs[i].name
+                .doc-unique= userDocs[i].uniqueUrl
+                .doc-category= userDocs[i].category

@@ -2,25 +2,28 @@ var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../model/User");
 var Document = require('../model/Document');
+var Category = require('../model/Category');
 
 
 var userController = {};
 
 // Restrict access to root page
 userController.home = function(req, res) {
-    
+
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
     let userDocuments = [];
-    Document.find({isActive: true}).populate('author').exec(function(err, result){
+    Document.find({isActive: true}).populate('author').populate('category').exec(function(err, result){
+        console.log("res",result)
         for(let item of result){
             if(item.author.username == req.user.username){
                 userDocuments.push(item)
             }
         }
+        
         // otherwise it renders home view
-        res.render('user/home', { user: req.user, url: 'home', title: 'Home', documents: userDocuments });
+        res.render('user/home', { user: req.user, url: 'home', title: 'Home', userDocs: userDocuments });
     });
 
     
@@ -67,8 +70,23 @@ userController.createDocument = function(req, res) {
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
-    // otherwise it renders new presentation view
-    res.render('/user/createDocument', { user: req.user});
+
+    Category.find({isActive: true}, (err, result)=>{
+
+        if(err){
+
+            // otherwise it renders new presentation view
+            res.render('user/createDocument', { user: req.user , error: err, categories: null});
+        
+        }else{
+
+            // otherwise it renders new presentation view
+            res.render('user/createDocument', { user: req.user , error: null, categories: result });
+        
+        }
+
+    })
+    
 
 };
 
@@ -78,25 +96,31 @@ userController.doCreateDocument = function(req, res){
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
+    console.log(req.body)
     // create new document if logged in
     let newDocument = new Document(
         {
-            uniqueUrl: req.body.uniqueUrl,
+            uniqueUrl: req.body.url,
             name: req.body.name,
             author: mongoose.Types.ObjectId(req.user._id),
-            category: mongoose.Types.ObjectId(req.body.categoryId),
+            category: mongoose.Types.ObjectId(req.body.category),
             summary: req.body.summary,
-            text: req.body.text
+            text: req.body.content
         }
     );
 
     newDocument.save(function(err, result){
-        if(err){res.json({status: 500,text: err})}
+        if(err)
+        {
+            res.json({status: 201,text: err})
+        }else{
+            res.json({
+                status: 200,
+                text: ''
+            });
+        }
 
-        res.json({
-            status: 200,
-            text: ''
-        });
+        
     })
 
 };

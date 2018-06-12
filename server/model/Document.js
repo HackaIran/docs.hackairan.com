@@ -5,8 +5,8 @@ const validate = require('mongoose-validator');
 const summaryValidator = [
     validate({
       validator: 'isLength',
-      arguments: [50, 250],
-      message: 'Name should be between 50 and 250 characters'
+      arguments: [30, 250],
+      message: 'Summary should be between 50 and 250 characters'
     })
   ];
 
