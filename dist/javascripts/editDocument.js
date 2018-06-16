@@ -4,7 +4,7 @@ submitBtn.onclick = function(event){
     submitBtn.style.color = 'black';
     submitBtn.innerHTML = 'loading...';
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/user/doCreateDocument', true);
+    xhr.open("POST", '/user/doEditDocument', true);
 
     //Send the proper header information along with the request
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -32,9 +32,8 @@ submitBtn.onclick = function(event){
     }
     const name = document.getElementsByName('name')[0].value
     const uniqueUrl = document.getElementsByName('uniqueUrl')[0].value
-    const category = document.getElementsByName('category')[0].value
     const text = document.getElementsByName('text')[0].value
     const summary = document.getElementsByName('summary')[0].value
 
-    xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&category="+category+"&text="+text+"&summary="+summary); 
+    xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&text="+text+"&summary="+summary); 
 }

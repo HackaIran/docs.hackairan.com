@@ -15,7 +15,6 @@ userController.home = function(req, res) {
 
     let userDocuments = [];
     Document.find({isActive: true}).populate('author').populate('category').exec(function(err, result){
-        console.log("res",result)
         for(let item of result){
             if(item.author.username == req.user.username){
                 userDocuments.push(item)
@@ -100,19 +99,19 @@ userController.doCreateDocument = function(req, res){
     // create new document if logged in
     let newDocument = new Document(
         {
-            uniqueUrl: req.body.url,
+            uniqueUrl: req.body.uniqueUrl,
             name: req.body.name,
             author: mongoose.Types.ObjectId(req.user._id),
             category: mongoose.Types.ObjectId(req.body.category),
             summary: req.body.summary,
-            text: req.body.content
+            text: req.body.text
         }
     );
 
     newDocument.save(function(err, result){
         if(err)
         {
-            res.json({status: 201,text: err})
+            res.json({status: 201, text: err})
         }else{
             res.json({
                 status: 200,
@@ -130,12 +129,12 @@ userController.editDocument = function(req, res){
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
-    Document.findOne({uniqueUrl: req.params.uniqueUrl}, function(err, res){
+    Document.findOne({uniqueUrl: req.params.uniqueUrl}, function(err, result){
         
         if(err){ return res.render('error') }
 
         // otherwise it renders new presentation view
-        res.render('/user/editDocument', { user: req.user, document: res});
+        res.render('user/editDocument', { user: req.user, document: result});
 
     })
     
@@ -147,15 +146,15 @@ userController.doEditDocument = function(req, res){
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
-    Document.findOneAndUpdate({uniqueUrl: req.uniqueUrl},
+    Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},
         {
-            uniqueUrl: req.body.uniqueUrl,
             name: req.body.name,
             summary: req.body.summary,
             text: req.body.text,
             modifiedAt: Date.now()
         }
-    ,function(err, doc, res){
+    ,function(err, doc){
+        console.log(doc)
         if(!err){
             res.json({
                 status: 200,
@@ -163,6 +162,7 @@ userController.doEditDocument = function(req, res){
         }else{
             res.json({
                 status: 500,
+                text: err
             });
         }
     });

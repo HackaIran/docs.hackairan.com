@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .create-document-form
+        .form
+            h2="Edit "+document.name
+            input(type='text', name='name', placeholder='Enter title' value=document.name)
+            label
+            textarea(name='text', placeholder='Paste md text here')= document.text 
+            label
+            textarea(name='summary', placeholder='Enter summary here').summary= document.summary
+            label
+            input(type='hidden', name='uniqueUrl', placeholder='Enter Unique Path, Like: how-volcano-works' value=document.uniqueUrl).u-url
+            label
+            button.submit Save
+    
+    script(src="/javascripts/editDocument.js")
+

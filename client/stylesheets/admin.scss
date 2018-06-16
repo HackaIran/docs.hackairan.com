@@ -64,7 +64,7 @@ nav {
 
     .form {
         display: inline-block;
-        text-align: center;
+        text-align: left;
         padding-bottom: 40px;
         width: 100%;
     }
@@ -81,6 +81,7 @@ nav {
         width: 400px;
         padding: 15px;
         margin: 10px;
+        margin-top: 30px;
         outline: none;
         transition-duration: 0.5s;
 
@@ -90,7 +91,7 @@ nav {
     }
 
     .u-url{
-        width: 30%;
+        width: 35%;
     }
 
     select {
@@ -101,8 +102,8 @@ nav {
         width: 250px;
         padding: 15px;
         margin: 10px;
+        margin-top: 30px;
         outline: none;
-        transition-duration: 0.5s;
 
         &:focus {
             background: #FFF;
@@ -117,11 +118,11 @@ nav {
         padding: 2%;
         margin: 10px;
         outline: none;
-        transition-duration: 0.5s;
         align-self: stretch;
         height: 400px;
         width: 80%;
-        max-width: 80%;
+        resize: none;
+        margin-top: 30px;
 
         &:focus {
             background: #FFF;
@@ -142,18 +143,26 @@ nav {
         color: white;
         transition-duration: 0.2s;
         outline: none;
+        display: block;
+        margin: auto;
 
         &:hover {
             background: slategrey;
         }
     }
 
-    .error-holder{
-        display: none;
-        margin: 10px;
+    .wrong-input{
+        outline: #e85e5e solid 2px;
+        position: relative;
+    }
+
+    label {
+        display: block;
+        margin-left: 10px;
     }
     
 }
+
 .form-container {
     text-align: center;
     padding-top: 30px;
@@ -380,12 +389,18 @@ nav {
     align-items: center;
     flex-wrap: wrap;
     padding: 30px 20px 0px 20px;
+    color: black;
     & > .document-item{
         width: 24%;
-        height: 400px;
         margin-right: 20px;
-        background: #333;
+        background: whitesmoke;
+        border: solid #333 1px;
+        border-radius: 5px;
         margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
 
         @media screen and (max-width: 1200px) {
             width: 30%;
@@ -399,8 +414,35 @@ nav {
             width: 100%;
         }
 
-        
-        color: white;
-        
+        & > .doc-title {
+            height: 60px;
+            font-size: 30px;
+            line-height: 60px;
+        }
+
+        & > .doc-url{
+            height: 30px;
+            line-height: 30px;
+
+        }
+
+        & > .doc-category{
+            height: 30px;
+            line-height: 30px;
+        }
+
+        & > .doc-summary {
+            height: 90px;
+            line-height: 30px;
+            text-align: center;
+
+        }
+
+        & > a {
+            height: 30px;
+            text-decoration: none;
+            color: black;
+        }
+
     }
 }
