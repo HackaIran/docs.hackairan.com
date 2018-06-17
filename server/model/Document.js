@@ -67,6 +67,10 @@ const documentSchema = db.Schema({
         required: [true, 'What Tha fak happened just now?'],
         type: Boolean,
         default: true
+    },
+    tags: {
+        type : [String] ,
+        default : []
     }
 });
 

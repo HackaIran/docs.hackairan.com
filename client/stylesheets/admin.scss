@@ -385,13 +385,13 @@ nav {
 
 .my-documents{
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     padding: 30px 20px 0px 20px;
     color: black;
     & > .document-item{
-        width: 24%;
+        width: 23%;
         margin-right: 20px;
         background: whitesmoke;
         border: solid #333 1px;

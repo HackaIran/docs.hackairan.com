@@ -6,10 +6,6 @@ const categorySchema = db.Schema({
         type : String,
         unique: true
     },
-    tags: {
-        type : [String] ,
-        default : []
-    },
     isActive: {
         required: true,
         type: Boolean

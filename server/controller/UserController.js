@@ -3,6 +3,7 @@ var passport = require("passport");
 var User = require("../model/User");
 var Document = require('../model/Document');
 var Category = require('../model/Category');
+const extractTags = require('../helper/extractor');
 
 
 var userController = {};
@@ -17,6 +18,9 @@ userController.home = function(req, res) {
     Document.find({isActive: true}).populate('author').populate('category').exec(function(err, result){
         for(let item of result){
             if(item.author.username == req.user.username){
+                if(item.summary.length > 110){
+                    item.summary = item.summary.slice(0,110)+" ...";
+                }
                 userDocuments.push(item)
             }
         }
@@ -90,12 +94,28 @@ userController.createDocument = function(req, res) {
 };
 
 //create Document
-userController.doCreateDocument = function(req, res){
+userController.doCreateDocument = async function(req, res){
 
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
-    console.log(req.body)
+    let contentTags = extractTags(req.body.text);
+    console.log(contentTags);
+
+    let isDuplicate = await  Document.findOne({uniqueUrl: req.body.uniqueUrl})
+
+    if(isDuplicate){
+
+        res.json({status: 201, text: {
+            errors:{uniqueUrl:{message:`Unique Path ${req.body.uniqueUrl} is already defined by someone else.`} }
+        }})
+        
+        return;
+
+    }
+
+    
+
     // create new document if logged in
     let newDocument = new Document(
         {
@@ -104,7 +124,8 @@ userController.doCreateDocument = function(req, res){
             author: mongoose.Types.ObjectId(req.user._id),
             category: mongoose.Types.ObjectId(req.body.category),
             summary: req.body.summary,
-            text: req.body.text
+            text: req.body.text,
+            tags: contentTags
         }
     );
 
@@ -146,16 +167,19 @@ userController.doEditDocument = function(req, res){
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
+    let contentTags = extractTags(req.body.text);
+    console.log(contentTags);
+
     Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},
         {
             name: req.body.name,
             summary: req.body.summary,
             text: req.body.text,
-            modifiedAt: Date.now()
+            modifiedAt: Date.now(),
+            tags: contentTags
         }
     ,{ runValidators: true }
     ,function(err, doc){
-        console.log(doc)
         if(!err){
             res.json({
                 status: 200,
