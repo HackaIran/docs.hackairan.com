@@ -153,6 +153,7 @@ userController.doEditDocument = function(req, res){
             text: req.body.text,
             modifiedAt: Date.now()
         }
+    ,{ runValidators: true }
     ,function(err, doc){
         console.log(doc)
         if(!err){

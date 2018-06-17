@@ -25,46 +25,46 @@ const uniqueUrlValidator = [
 
 const documentSchema = db.Schema({
     name: {
-        required: true,
+        required: [true, 'Title field is required for a document. please fill it.'],
         type: String
     },
     text: {
-        required: true,
+        required: [true, 'Content is required for a document. please fill it.'],
         type: String
     },
     author: {
-        required: true,
+        required: [true, 'Who are you?!?! and how did you get here :))))))'],
         type: db.Schema.Types.ObjectId,
         ref: "User"
     },
     category: {
-        required: true,
+        required: [true, 'Category is required for a document. please fill it.'],
         type: db.Schema.Types.ObjectId,
         ref: "Category"
     },
     summary: {
-        required: true,
+        required: [true, 'Summary field is required for a document. please fill it.'],
         type: String,
         validate: summaryValidator
     },
     uniqueUrl:{
-        required: true,
+        required: [true, 'UniqueUrl field is required for a document. please fill it.'],
         type: String,
         unique: true,
         validate: uniqueUrlValidator
     },
     createdAt: {
-        required: true,
+        required: [true, 'What Tha fak happened just now?'],
         type: Date,
         default: Date.now()
     },
     modifiedAt: {
-        required: true,
+        required: [true, 'What Tha fak happened just now?'],
         type: Date,
         default: Date.now()
     },
     isActive: {
-        required: true,
+        required: [true, 'What Tha fak happened just now?'],
         type: Boolean,
         default: true
     }
