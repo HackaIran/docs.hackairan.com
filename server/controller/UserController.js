@@ -1,8 +1,10 @@
 var mongoose = require("mongoose");
+
 var passport = require("passport");
 var User = require("../model/User");
 var Document = require('../model/Document');
 var Category = require('../model/Category');
+var DocumentArchive = require('../model/DocumentArchive');
 const extractTags = require('../helper/extractor');
 
 
@@ -107,7 +109,7 @@ userController.doCreateDocument = async function(req, res){
     if(isDuplicate){
 
         res.json({status: 201, text: {
-            errors:{uniqueUrl:{message:`Unique Path ${req.body.uniqueUrl} is already defined by someone else.`} }
+            errors:{uniqueUrl:{message:`Unique Path ${req.body.uniqueUrl} is already defined by someone.`} }
         }})
         
         return;
@@ -139,8 +141,6 @@ userController.doCreateDocument = async function(req, res){
                 text: ''
             });
         }
-
-        
     })
 
 };
@@ -200,16 +200,36 @@ userController.deleteDocument = function(req, res){
 
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
-
-    Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},{isActive: false},function(err, doc, result){
+    Document.findOne({uniqueUrl: req.body.uniqueUrl},function(err, document){
         if(err){
             res.json({
                 status: 500
             })
         }else{
-            res.json({
-                status: 200
-            })
+            let duplicateDoc = JSON.parse(JSON.stringify(document))
+            duplicateDoc._id = mongoose.Types.ObjectId();
+            var newDocumentArchive = new DocumentArchive(duplicateDoc);
+            newDocumentArchive.save(function(err, result){
+                if(err)
+                {
+                    console.log(err);
+                    res.json({status: 501})
+                }else{
+                    Document.deleteOne({uniqueUrl: req.body.uniqueUrl},function(err){
+                        if(!err){
+                            res.json({
+                                status: 200
+                            })    
+                        }else{
+                            res.json({
+                                status: 502
+                            })
+                        }
+                        
+                    })
+                    
+                }
+            })            
         }
     })
 }

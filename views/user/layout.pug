@@ -2,6 +2,7 @@ doctype html
 html
   head
     title= title + ' | HackaDocs Panel'
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(rel="stylesheet", href="../../stylesheets/vendor.css")
     link(rel="stylesheet", href="../../stylesheets/admin.css")
     block header
@@ -25,7 +26,19 @@ html
           a(href='/logout') Logout
         li.logged-in-user
           img.avatar(src=user.gravatar, alt=user.fullName + "'s Gravatar")
-    div.container
-      div.content
+    .container
+      .content
         block content
+
+    .delete-submit
+      .delete-submit-background
+      .delete-submit-foreground
+        .foreground-container
+          .fc-title Are you sure?
+          .delete-error
+          .answer-container
+            Button.cancel No
+            Button.submit Yes
+    
     script(src='../../javascripts/vendor.bundle.js')
+    block scripts
