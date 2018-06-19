@@ -11,6 +11,10 @@ html
       li
         a(href='/user')
           img(src="/images/logo.png", alt="HackaDocs Logo")
+      li
+        a(href='/user/createDocument') Add Document +
+      li
+        a(href='/user/categories') Categories
       if (!user)
 
         if (url !== 'login')

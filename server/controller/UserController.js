@@ -200,6 +200,7 @@ userController.deleteDocument = function(req, res){
 
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
+
     Document.findOne({uniqueUrl: req.body.uniqueUrl},function(err, document){
         if(err){
             res.json({
@@ -231,6 +232,40 @@ userController.deleteDocument = function(req, res){
                 }
             })            
         }
+    })
+}
+
+userController.categories = function(req, res){
+    // redirects to /login if user hasn't logged in yet
+    if (!req.isAuthenticated()) return res.redirect('/login');
+
+
+
+    Category.find({isActive: true},async function(err, result){
+        
+        let categories = [];
+        for(let item of result){
+            let categoryItems = await  Document.find({category: mongoose.Types.ObjectId(item._id)})
+                .sort({modifiedAt: -1}).limit(3);
+            let category = {
+                title: item.title,
+                documents: []
+            }
+            for(let doc of categoryItems){
+                let document = {
+                    name: doc.name,
+                    uniqueUrl: doc.uniqueUrl
+                }
+                
+                category.documents.push(document);
+            }
+            
+            categories.push(category);
+
+        }
+
+        res.render('user/categories', {categories: categories});
+
     })
 }
 

@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    h1 Categories
+    .categories-container
+        .add-category
+            a(href='/user/createCategory') Add+
+        table.category-items
+            thead
+                tr
+                    th Title
+                    th(colspan=3) Last Modified Items
+            
+            tbody
+                -for(let item of categories)
+                    tr
+                        td= item.title
+                        -for(let doc of item.documents)
+                            td title:
+                                span=doc.name 
+                            td unique url: 
+                                span=doc.uniqueUrl
+                        td Edit | Delete
+

@@ -61,6 +61,9 @@ const setUserRouters = function () {
 
   //POST delete document
   router.post('/user/deleteDocument', userController.deleteDocument)
+
+  //Get Categories
+  router.get('/user/categories', userController.categories)
   
 };
 

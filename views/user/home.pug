@@ -9,8 +9,9 @@ block content
                 .doc-url= userDocs[i].uniqueUrl
                 .doc-category= userDocs[i].category.title
                 .doc-summary= userDocs[i].summary
-                a(href="user/editDocument/"+userDocs[i].uniqueUrl) Edit
-                Button.delete(data-url=userDocs[i].uniqueUrl) Delete
+                .actions
+                    a(href="user/editDocument/"+userDocs[i].uniqueUrl) Edit
+                    Button.delete(data-url=userDocs[i].uniqueUrl) Delete
 
 block scripts
     script(src="../../javascripts/adminHome.js")
