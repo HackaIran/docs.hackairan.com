@@ -64,6 +64,8 @@ const setUserRouters = function () {
 
   //Get Categories
   router.get('/user/categories', userController.categories)
+
+  router.get('/user/doAddCategory', userController.doAddCategory)
   
 };
 

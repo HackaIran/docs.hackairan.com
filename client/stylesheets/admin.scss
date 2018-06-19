@@ -538,7 +538,7 @@ nav {
                 color: red;
             }
 
-            & > .answer-container{
+            & > .action-container{
                 padding-top: 30px;
                 display: flex;
                 align-items: center;
@@ -622,8 +622,128 @@ nav {
                 background: #eee;
             }
 
+
+            & > tr{ 
+                & > td > table{
+                    width: 100%;
+                    
+                    & > tr > td{
+                        width: 50%;
+                    }
+                }
+                & > td:nth-child(1){
+                    width: 20%;
+                }
+
+                & > td:nth-child(3){
+                    width: 10%;
+                }
+            }
         }
     }
 }
 
+.add-category-modal{
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: none;
+    margin: 0;
+    padding: 0;
+    & > .add-category-background{
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        background-color: #444;
+    }
+
+    & > .add-category-foreground{
+        position: relative;
+        
+        & > .foreground-container{
+
+            position: fixed;
+            height: 230px;
+            width: 320px;
+            background: whitesmoke;
+            border: #888 solid 1px;
+            border-radius: 10px;
+            left: calc((100% - 320px)/2);
+            top: calc((100% - 170px)/2);
+
+            & > .fc-title{
+                text-align: center;
+                font-size: 25px;
+                font-weight: 800;
+                margin-top: 15px;
+            }
+
+            & > .add-error{
+                display: none;
+                padding-top: 15px;
+                text-align: center;
+                color: red;
+            }
+
+            & > .add-action-container{
+                padding-top: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+
+                & > Button{
+                    font-size: 17px;
+                    border: none;
+                    cursor: pointer;
+                    padding: 10px 30px;
+                    color: white;
+                    transition-duration: 0.2s;
+                    outline: none;
+                }
+
+                & > .cancel{
+                    background-color: green;
+                    &:hover{
+                        background-color: lighten(green, 10%);
+                    }
+                }
+
+                & > .submit{
+                    background-color: darken(red,20%);
+                    &:hover{
+                        background-color: red;
+                    }
+                }
+
+            }
+
+            & > .add-category-title{
+                
+                display: block;
+                font-size: 16px;
+                background: #CCC;
+                border: none;
+                width: 200px;
+                padding: 15px;
+                margin-left: 45px;
+                margin-top: 20px;
+                outline: none;
+                transition-duration: 0.5s;
+        
+                &:focus {
+                    background: #FFF;
+                }
+                
+            }
+
+        }
+
+    }
+}
 

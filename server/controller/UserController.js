@@ -235,6 +235,7 @@ userController.deleteDocument = function(req, res){
     })
 }
 
+//categories page
 userController.categories = function(req, res){
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
@@ -267,6 +268,16 @@ userController.categories = function(req, res){
         res.render('user/categories', {categories: categories});
 
     })
+}
+
+//add new category
+userController.doAddCategory = function(req, res){
+
+}
+
+//delete category
+userController.deleteCategory = function(req, res){
+
 }
 
 module.exports = userController;

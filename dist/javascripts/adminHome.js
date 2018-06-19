@@ -1,6 +1,6 @@
 var deleteBtn = document.querySelectorAll('.delete')
-var submitBtn = document.querySelector('.answer-container > .submit');
-var cancelBtn = document.querySelector('.answer-container > .cancel');
+var submitBtn = document.querySelector('.action-container > .submit');
+var cancelBtn = document.querySelector('.action-container > .cancel');
 
 for(let item of deleteBtn){
     item.onclick = function(){
@@ -32,6 +32,7 @@ submitBtn.onclick = function(){
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             if(JSON.parse(xhr.response).status == 200){
                 submitBtn.innerHTML = 'Done :)';
+                window.location.reload();
             }else{
 
                 submitBtn.style.background = 'red';
