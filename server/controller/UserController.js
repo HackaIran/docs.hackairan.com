@@ -237,6 +237,7 @@ userController.deleteDocument = function(req, res){
 
 //categories page
 userController.categories = function(req, res){
+    
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
@@ -249,6 +250,7 @@ userController.categories = function(req, res){
             let categoryItems = await  Document.find({category: mongoose.Types.ObjectId(item._id)})
                 .sort({modifiedAt: -1}).limit(3);
             let category = {
+                _id: item._id,
                 title: item.title,
                 documents: []
             }
@@ -273,10 +275,78 @@ userController.categories = function(req, res){
 //add new category
 userController.doAddCategory = function(req, res){
 
+    // redirects to /login if user hasn't logged in yet
+    if (!req.isAuthenticated()) return res.redirect('/login');
+
+    // create new document if logged in
+    let newCategory = new Category(
+        {
+            title: req.body.title,
+        }
+    );
+
+    newCategory.save(function(err, result){
+        if(err)
+        {
+            res.json({status: 201, text: err})
+        }else{
+            res.json({
+                status: 200,
+                text: ''
+            });
+        }
+    })
+
 }
 
 //delete category
 userController.deleteCategory = function(req, res){
+
+    // redirects to /login if user hasn't logged in yet
+    if (!req.isAuthenticated()) return res.redirect('/login');
+
+    //deactive category
+    Category.findByIdAndUpdate(req.body._id, {isActive: false}, async function(err){
+        if(!err){
+            //find category's documents 
+            await Document.find({category: mongoose.Types.ObjectId(req.body._id)}, async function(findErr, result){
+                if(!findErr){
+                    if(result.length != 0){
+                        for(let item of result){
+                            //deactive founded documents
+                            await Document.findByIdAndUpdate(item._id, {isActive: false},function(updateErr){
+                                if(!updateErr){
+                                    return res.json({
+                                        status: 200
+                                    });
+                                }else{
+                                    return res.json({
+                                        status: 502,
+                                        err: updateErr
+                                    });
+                                }
+                            });
+                        }
+                    }else{
+                        return res.json({
+                            status: 200
+                        });
+                    }
+                }else{
+                    return res.json({
+                        status: 501
+                    });
+                }
+                
+            })
+
+        }else{
+            return res.json({
+                status: 500
+            });
+        }
+
+    });
 
 }
 

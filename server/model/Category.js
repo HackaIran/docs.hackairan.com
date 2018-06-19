@@ -4,11 +4,11 @@ const categorySchema = db.Schema({
     title: {
         required : true,
         type : String,
-        unique: true
     },
     isActive: {
         required: true,
-        type: Boolean
+        type: Boolean,
+        default: true
     }
 });
 

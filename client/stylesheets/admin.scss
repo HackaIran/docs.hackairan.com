@@ -747,3 +747,39 @@ nav {
     }
 }
 
+.categoryEdit{
+
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    padding: 4px 10px;
+    background: darken(slategrey, 20%);
+    color: white;
+    transition-duration: 0.2s;
+    outline: none;
+
+    &:hover {
+        background: slategrey;
+    }
+
+}
+
+.categoryDelete{
+
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    padding: 4px 10px;
+    background: darken(slategrey, 20%);
+    color: white;
+    transition-duration: 0.2s;
+    outline: none;
+    margin-left: 5px;
+
+    &:hover {
+        background: slategrey;
+    }
+
+}
+
+

@@ -65,7 +65,11 @@ const setUserRouters = function () {
   //Get Categories
   router.get('/user/categories', userController.categories)
 
-  router.get('/user/doAddCategory', userController.doAddCategory)
+  //POST add category
+  router.post('/user/doAddCategory', userController.doAddCategory)
+
+  //POST delete category
+  router.post('/user/deleteCategory', userController.deleteCategory)
   
 };
 

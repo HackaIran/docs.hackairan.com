@@ -15,15 +15,23 @@ block content
                 -for(let item of categories)
                     tr
                         td= item.title
-                        -for(let doc of item.documents)
-                            td
-                                table
-                                    tr
-                                        td title:
-                                            span=doc.name 
-                                        td unique url: 
-                                            span=doc.uniqueUrl
-                            td Edit | Delete
+                        -if(item.documents)
+                            -for(let doc of item.documents)
+                                td
+                                    table
+                                        tr
+                                            td title:
+                                                span=doc.name 
+                                            td unique url: 
+                                                span=doc.uniqueUrl
+
+                        -if(item.documents.length == 0)
+                            td No documents in this category
+                            
+                        td 
+                            button(data-id=item._id data-type='edit').categoryEdit Edit
+                            |
+                            button(data-id=item._id).categoryDelete Delete
 
 block modals
     .add-category-modal
@@ -43,7 +51,7 @@ block modals
             .foreground-container
                 .fc-title Are you sure?
                 .delete-error
-                .cation-container
+                .action-container
                     Button.cancel No
                     Button.submit Yes
 
