@@ -36,24 +36,22 @@ block content
 block modals
     .add-category-modal
         .add-category-background
-        .add-category-foreground
-            .foreground-container
-                .fc-title Add new category
-                input(type="text" name="title" placeholder="Enter title here").add-category-title
-                .add-error
-                .add-action-container
-                    Button.cancel Cancel
-                    Button.submit Save
+        .foreground-container
+            .fc-title Add new category
+            input(type="text" name="title" placeholder="Enter title here").add-category-title
+            .add-error
+            .add-action-container
+                Button.cancel Cancel
+                Button.submit Save
 
     .delete-submit
         .delete-submit-background
-        .delete-submit-foreground
-            .foreground-container
-                .fc-title Are you sure?
-                .delete-error
-                .action-container
-                    Button.cancel No
-                    Button.submit Yes
+        .foreground-container
+            .fc-title Are you sure?
+            .delete-error
+            .action-container
+                Button.cancel No
+                Button.submit Yes
 
 block scripts
     script(src="../../javascripts/categories.js")

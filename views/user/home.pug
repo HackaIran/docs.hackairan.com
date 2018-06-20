@@ -14,15 +14,14 @@ block content
                     Button.delete(data-url=userDocs[i].uniqueUrl) Delete
 
 block modals
-        .delete-submit
-            .delete-submit-background
-            .delete-submit-foreground
-                .foreground-container
-                    .fc-title Are you sure?
-                    .delete-error
-                    .action-container
-                        Button.cancel No
-                        Button.submit Yes
+    .delete-submit
+        .delete-submit-background
+        .foreground-container
+            .fc-title Are you sure?
+            .delete-error
+            .action-container
+                Button.cancel No
+                Button.submit Yes
 
 block scripts
     script(src="../../javascripts/adminHome.js")

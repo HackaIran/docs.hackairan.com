@@ -6,16 +6,12 @@ for(let item of deleteBtn){
     item.onclick = function(){
         const uniqueUrl = item.getAttribute('data-url');
         submitBtn.setAttribute('data-url', uniqueUrl);
-        document.querySelector('nav').style.filter = 'blur(3px)';
-        document.querySelector('.container').style.filter = 'blur(3px)';
-        document.querySelector('.delete-submit').style.display = 'block';
+        document.querySelector('.delete-submit').classList.add('active');
     } 
 }
 
 cancelBtn.onclick = function(){
-    document.querySelector('nav').style.filter = '';
-    document.querySelector('.container').style.filter = '';
-    document.querySelector('.delete-submit').style.display = 'none';
+    document.querySelector('.delete-submit').classList.remove('active');
 }
 
 submitBtn.onclick = function(){

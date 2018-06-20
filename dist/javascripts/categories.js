@@ -4,15 +4,11 @@ var addSubmit = document.querySelector('.add-action-container > .submit');
 var cancelSubmit = document.querySelector('.add-action-container > .cancel');
 
 addBtn.onclick = function(){
-    document.querySelector('nav').style.filter = 'blur(3px)';
-    document.querySelector('.container').style.filter = 'blur(3px)';
-    document.querySelector('.add-category-modal').style.display = 'block';
-} 
+    document.querySelector('.add-category-modal').classList.add('active');
+}
 
 cancelSubmit.onclick = function(){
-    document.querySelector('nav').style.filter = '';
-    document.querySelector('.container').style.filter = '';
-    document.querySelector('.add-category-modal').style.display = 'none';
+    document.querySelector('.add-category-modal').classList.remove('active');
 }
 
 addSubmit.onclick = function(){
@@ -59,16 +55,12 @@ for(let item of deleteBtn){
     item.onclick = function(){
         const _id = item.getAttribute('data-id');
         submitBtn.setAttribute('data-id', _id);
-        document.querySelector('nav').style.filter = 'blur(3px)';
-        document.querySelector('.container').style.filter = 'blur(3px)';
-        document.querySelector('.delete-submit').style.display = 'block';
+        document.querySelector('.delete-submit').classList.add('active');
     } 
 }
 
 cancelBtn.onclick = function(){
-    document.querySelector('nav').style.filter = '';
-    document.querySelector('.container').style.filter = '';
-    document.querySelector('.delete-submit').style.display = 'none';
+    document.querySelector('.delete-submit').classList.remove('active');
 }
 
 submitBtn.onclick = function(){
