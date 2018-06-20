@@ -71,6 +71,8 @@ const setUserRouters = function () {
   //POST delete category
   router.post('/user/deleteCategory', userController.deleteCategory)
   
+  //POST edit category
+  router.post('/user/editCategory', userController.editCategory)
 };
 
 setGeneralRouters();

@@ -14,7 +14,7 @@ block content
             tbody
                 -for(let item of categories)
                     tr
-                        td= item.title
+                        td(data-id=item._id).category-title= item.title
                         -if(item.documents)
                             -for(let doc of item.documents)
                                 td
@@ -29,7 +29,7 @@ block content
                             td No documents in this category
                             
                         td 
-                            button(data-id=item._id data-type='edit').categoryEdit Edit
+                            button(data-id=item._id data-save=false).categoryEdit Edit
                             |
                             button(data-id=item._id).categoryDelete Delete
 

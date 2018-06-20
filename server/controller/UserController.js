@@ -350,4 +350,24 @@ userController.deleteCategory = function(req, res){
 
 }
 
+//edit category
+userController.editCategory = function(req, res){
+
+    // redirects to /login if user hasn't logged in yet
+    if (!req.isAuthenticated()) return res.redirect('/login');
+
+    Category.findByIdAndUpdate(req.body._id, {title: req.body.title}, function(err, result){
+        if(err){
+            return res.json({
+                status: 500
+            });
+        }else{
+            return res.json({
+                status: 200
+            });
+        }
+    });
+
+}
+
 module.exports = userController;

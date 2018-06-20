@@ -654,6 +654,13 @@ nav {
     }
 }
 
+.edit-error{
+    display: none;
+    padding-top: 15px;
+    text-align: center;
+    color: red;
+}
+
 .add-category-modal{
     z-index: 5;
     width: 100%;

@@ -96,3 +96,49 @@ submitBtn.onclick = function(){
 }
 
 
+//Edit
+let editButtons = document.querySelectorAll('.categoryEdit');
+
+for(let item of editButtons){
+    item.onclick = function(){
+        const _id = item.getAttribute('data-id');
+        let _title = document.querySelector('.category-title[data-id="'+_id+'"]');
+        if(!item.getAttribute('data-save')){
+            _title.setAttribute('contenteditable', true);
+            item.setAttribute('data-save', true)
+            _title.focus();
+            item.style.background = 'green';
+            item.innerHTML = 'Save';
+        }else{
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/user/editCategory', true);
+
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() {//Call a function when the state changes.
+                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    if(JSON.parse(xhr.response).status == 200){
+                        submitBtn.innerHTML = 'Done :)';
+                        window.location.reload();
+                    }else{
+                        item.innerHTML = 'Faild!'
+                        item.style.background = 'red';
+                        item.style.color = 'white';
+                        let errorMessage = document.querySelector('.edit-error');
+                        errorMessage.style.display = 'block';
+                        errorMessage.innerHTML = 'Sorry we have got an error.';
+                    }
+                }
+            }
+
+            xhr.send("_id="+_id+"&title="+_title.innerHTML);
+
+        }
+        
+    } 
+}
+
+
+
