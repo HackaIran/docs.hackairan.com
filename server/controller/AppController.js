@@ -58,6 +58,7 @@ appController.getTextByUniqueUrl = function (req, res) {
             let converter = new showdown.Converter();
             res.json({
                 status: 200,
+                title: result.name,
                 text: converter.makeHtml(result.text)
             })
         }

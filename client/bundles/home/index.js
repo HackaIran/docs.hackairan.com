@@ -25,7 +25,11 @@ class App {
         const that = this;
         for (let item of allListItems) {
             item.onclick = function () {
-                that.selectDocument(this.getAttribute('data-id'))
+
+                let uniqueUrl = this.getAttribute('data-id');
+                document.querySelector('.article-loading').style.display = 'block';
+                that.selectDocument(uniqueUrl)
+                that.loadDocument(uniqueUrl)
             }
         }
     }
@@ -54,6 +58,20 @@ class App {
             if (!item.innerText.toLowerCase().includes(query)) item.classList.add('hidden');
         }
     }
+
+    loadDocument(uniqueUrl) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange=function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let res = JSON.parse(this.responseText);
+                document.querySelector('.article-loading').style.display = 'none';
+                document.querySelector('.article-title').innerHTML = res.title;
+                document.querySelector('.article-content').innerHTML = res.text;
+            }
+        };
+        xhttp.open("GET", "/getTextByUniqueUrl/" + uniqueUrl, true);
+        xhttp.send();
+      }
 
 }
 
