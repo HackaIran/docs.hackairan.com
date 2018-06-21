@@ -15,6 +15,9 @@ submitBtn.onclick = function(event){
                 submitBtn.style.background = 'green';
                 submitBtn.style.color = 'white';
                 submitBtn.innerHTML = 'Done :)';
+                setTimeout(()=>{
+                    window.location.reload();
+                },2000);
             }else{
                 let errorHolder = document.querySelector('.error-holder')
                 submitBtn.style.background = 'red';
