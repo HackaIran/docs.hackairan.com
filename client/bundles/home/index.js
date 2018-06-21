@@ -32,6 +32,14 @@ class App {
                 that.loadDocument(uniqueUrl)
             }
         }
+        let categories = document.querySelectorAll('.categories > li')
+        for(let item of categories){
+            item.onclick = function(){
+                let _id = this.getAttribute('data-id');
+                document.querySelector('.articles-loading').style.display = 'block';
+                that.filterByCategory(_id)
+            }
+        }
     }
 
     selectDocument (id) {
@@ -71,7 +79,74 @@ class App {
         };
         xhttp.open("GET", "/getTextByUniqueUrl/" + uniqueUrl, true);
         xhttp.send();
-      }
+    }
+
+    filterByCategory(_id){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange=function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let res = JSON.parse(this.responseText);
+                document.querySelector('.column.titles > ul').innerHTML = '';
+
+                for(let item of res){
+
+                    let newDoc = document.createElement('li');
+
+                    let newDocTitle = document.createElement('h3')
+                    let newDocTitleText = document.createTextNode(item.name)
+                    newDocTitle.appendChild(newDocTitleText);
+
+                    let newDocDetails = document.createElement('span')
+
+                    let newDocDateTime = document.createElement('time')
+                    let newDocDateTimeData = document.createTextNode(item.modifiedAt)
+                    newDocDateTime.appendChild(newDocDateTimeData);
+
+                    let newDocDetailSeprator = document.createElement('span')
+                    let newDocDSData = document.createTextNode(' | ')
+                    newDocDetailSeprator.appendChild(newDocDSData);
+
+                    let newDocAuthor = document.createElement('span')
+                    let newDocAuthorData = document.createTextNode(item.author)
+                    newDocAuthor.appendChild(newDocAuthorData);
+
+                    newDocDetails.appendChild(newDocDateTime);
+                    newDocDetails.appendChild(newDocDetailSeprator);
+                    newDocDetails.appendChild(newDocAuthor);
+
+                    let newDocSummary = document.createElement('p');
+                    let newDocSummaryData = document.createTextNode(item.summary);
+                    newDocSummary.appendChild(newDocSummaryData);
+
+                    newDoc.appendChild(newDocTitle)
+                    newDoc.appendChild(newDocDetails)
+                    newDoc.appendChild(newDocSummary)
+                    newDoc.setAttribute('data-id', item.uniqueUrl)
+
+                    document.querySelector('.column.titles > ul').appendChild(newDoc);
+
+                    
+
+                }
+                
+                document.querySelector('.articles-loading').style.display = 'none';
+
+                // - for (let document of documents) {
+                //     li(data-id=document.uniqueUrl)
+                //       h3= document.name
+                //       span
+                //         time= document.modifiedAt
+                //         span  | 
+                //         span= document.author
+                //       p= document.summary
+                //   - }
+
+
+            }
+        };
+        xhttp.open("GET", "/category/" + _id, true);
+        xhttp.send();
+    }
 
 }
 

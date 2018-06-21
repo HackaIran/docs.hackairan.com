@@ -10,11 +10,12 @@ appController.index = function (req, res) {
 
     Promise.all([
         Document.find({isActive: true}).populate('author').populate('category'),
-        Category.find({}),
+        Category.find({isActive: true}),
     ]).then(([documentResult , categoryResult]) => {
         
         //handling Documents
         let documents = [];
+        let tags = [];
         for (let item of documentResult) {
             console.log(item)
             documents.push({
@@ -25,20 +26,20 @@ appController.index = function (req, res) {
                 summary: item.summary,
                 modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
             })
+            tags.concat(item.tags);
         }
         
         //handling Categories and tags
         let categories = [];
-        let tags = [];
         for(let item of categoryResult){
-            categories.push(item.title);
-            tags.concat(item.tags);
+            categories.push({title:item.title, _id:item._id});
         }
 
         //returning result
         res.render('index', {
             documents: documents,
-            categories: categories
+            categories: categories,
+            tags: tags
         })
 
     });
@@ -77,9 +78,9 @@ appController.getAuthor = function (req, res) {
 
 appController.getDocumentsByCategory = function (req, res) {
     let documents = [];
-    Document.find({isActive: true}).populate('category').exec(function(err, res){
-        for(let item of res){
-            if(item.category.name == req.params.name){
+    Document.find({isActive: true}).populate('category').populate('author').exec(function(err, result){
+        for(let item of result){
+            if(item.category._id == req.params.id){
                 documents.push({
                     uniqueUrl: item.uniqueUrl,
                     name: item.name,
@@ -89,25 +90,26 @@ appController.getDocumentsByCategory = function (req, res) {
                     modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
                 });
             }
+            
         }
+        console.log(documents)
+        res.json(documents);
     });
-    res.json(documents);
+    
 }
 
 appController.getDocumentsByTag = function(req, res){
     let documents = [];
-    Document.find({isActive: true}).populate('category').exec(function(err, res){
+    Document.find({isActive: true, tags: req.params.tag}, function(err, res){
         for(let item of res){
-            if(item.category.tags.includes(req.params.tag)){
-                documents.push({
-                    uniqueUrl: item.uniqueUrl,
-                    name: item.name,
-                    author: item.author.fullName,
-                    category: item.category.title,
-                    summary: item.summary,
-                    modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
-                });
-            }
+            documents.push({
+                uniqueUrl: item.uniqueUrl,
+                name: item.name,
+                author: item.author.fullName,
+                category: item.category.title,
+                summary: item.summary,
+                modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+            });
         }
     });
     res.json(documents);

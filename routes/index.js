@@ -32,7 +32,7 @@ const setGeneralRouters = function () {
   router.get( '/author/:id', appController.getAuthor )
 
   //GET Documents by Category
-  router.get('/category/:name', appController.getDocumentsByCategory )
+  router.get('/category/:id', appController.getDocumentsByCategory )
 
   //GET Documents by Tag
   router.get('/category/:tag', appController.getDocumentsByTag );

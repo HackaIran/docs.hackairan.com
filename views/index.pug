@@ -14,17 +14,13 @@ block content
 
     h4 Categories
     ul.categories
-      li All
-      li Technology
-      li Biotechnology
-      li Music
+      -for(let item of categories)
+        li(data-id=item._id)=item.title
 
     h4 Tags
     ul.hashtags
-      li hackademy
-      li hackairan
-      li teamup
-      li opensource
+      -for(let item of tags)
+        li=item
 
 
   .column.titles
@@ -40,6 +36,8 @@ block content
             span= document.author
           p= document.summary
       - }
+    .articles-loading
+      .loading-spiner
 
   .column.content
     article
