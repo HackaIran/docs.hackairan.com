@@ -17,7 +17,6 @@ appController.index = function (req, res) {
         let documents = [];
         let tags = [];
         for (let item of documentResult) {
-            console.log(item)
             documents.push({
                 uniqueUrl: item.uniqueUrl,
                 name: item.name,
@@ -26,7 +25,13 @@ appController.index = function (req, res) {
                 summary: item.summary,
                 modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
             })
-            tags.concat(item.tags);
+            if(item.tags){
+                for(let newTag of item.tags){
+                    if(tags.indexOf(newTag) == -1){
+                        tags.push(newTag)
+                    }
+                }
+            }
         }
         
         //handling Categories and tags
@@ -92,7 +97,6 @@ appController.getDocumentsByCategory = function (req, res) {
             }
             
         }
-        console.log(documents)
         res.json(documents);
     });
     
@@ -100,8 +104,8 @@ appController.getDocumentsByCategory = function (req, res) {
 
 appController.getDocumentsByTag = function(req, res){
     let documents = [];
-    Document.find({isActive: true, tags: req.params.tag}, function(err, res){
-        for(let item of res){
+    Document.find({isActive: true, tags: req.params.tag}).populate('category').populate('author').exec(function(err, result){
+        for(let item of result){
             documents.push({
                 uniqueUrl: item.uniqueUrl,
                 name: item.name,
@@ -111,8 +115,9 @@ appController.getDocumentsByTag = function(req, res){
                 modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
             });
         }
+        res.json(documents);
     });
-    res.json(documents);
+    
 }
 
 module.exports = appController;

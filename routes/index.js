@@ -35,7 +35,7 @@ const setGeneralRouters = function () {
   router.get('/category/:id', appController.getDocumentsByCategory )
 
   //GET Documents by Tag
-  router.get('/category/:tag', appController.getDocumentsByTag );
+  router.get('/tag/:tag', appController.getDocumentsByTag );
 
 };
 

@@ -102,7 +102,6 @@ userController.doCreateDocument = async function(req, res){
     if (!req.isAuthenticated()) return res.redirect('/login');
 
     let contentTags = extractTags(req.body.text);
-    console.log(contentTags);
 
     let isDuplicate = await  Document.findOne({uniqueUrl: req.body.uniqueUrl})
 
@@ -168,7 +167,6 @@ userController.doEditDocument = function(req, res){
     if (!req.isAuthenticated()) return res.redirect('/login');
 
     let contentTags = extractTags(req.body.text);
-    console.log(contentTags);
 
     Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},
         {
@@ -213,7 +211,6 @@ userController.deleteDocument = function(req, res){
             newDocumentArchive.save(function(err, result){
                 if(err)
                 {
-                    console.log(err);
                     res.json({status: 501})
                 }else{
                     Document.deleteOne({uniqueUrl: req.body.uniqueUrl},function(err){
