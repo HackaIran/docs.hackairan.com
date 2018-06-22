@@ -16,7 +16,7 @@ submitBtn.onclick = function(event){
                 submitBtn.style.color = 'white';
                 submitBtn.innerHTML = 'Done :)';
                 setTimeout(()=>{
-                    window.location.reload();
+                    window.location.replace('/user')
                 },2000);
             }else{
                 let errorHolder = document.querySelector('.error-holder')

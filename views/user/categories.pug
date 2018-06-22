@@ -16,9 +16,9 @@ block content
                     tr
                         td(data-id=item._id).category-title= item.title
                         -if(item.documents)
-                            -for(let doc of item.documents)
-                                td
-                                    table
+                            td
+                                table
+                                    -for(let doc of item.documents)
                                         tr
                                             td title:
                                                 span=doc.name 
