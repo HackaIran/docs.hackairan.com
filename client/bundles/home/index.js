@@ -101,6 +101,7 @@ class App {
 
     filterByCategory(_id){
         var xhttp = new XMLHttpRequest();
+        let that = this;
         xhttp.onreadystatechange=function() {
             if (this.readyState == 4 && this.status == 200) {
                 let res = JSON.parse(this.responseText);
@@ -148,6 +149,8 @@ class App {
                 }
                 
                 document.querySelector('.articles-loading').style.display = 'none';
+
+                that.initializeDocumentsList();
 
             }
         };
@@ -158,6 +161,7 @@ class App {
     filterByTag(tagName){
 
         var xhttp = new XMLHttpRequest();
+        let that = this
         xhttp.onreadystatechange=function() {
             if (this.readyState == 4 && this.status == 200) {
                 let res = JSON.parse(this.responseText);
@@ -205,7 +209,7 @@ class App {
                 }
                 
                 document.querySelector('.articles-loading').style.display = 'none';
-
+                that.initializeDocumentsList();
             }
         };
         xhttp.open("GET", "/tag/" + tagName, true);

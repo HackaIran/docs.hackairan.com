@@ -62,9 +62,4 @@ typings/
 
 # stylesheets
 dist/stylesheets/*
-dist/javascripts/vendor.bundle.js
-dist/javascripts/home.bundle.js
-dist/stylesheets/home.css
-dist/stylesheets/vendor.css
-dist/stylesheets/home.css
-dist/javascripts/home.bundle.js
+dist/javascripts/*
