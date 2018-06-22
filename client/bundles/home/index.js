@@ -1,3 +1,5 @@
+const pageTitle = document.title;
+
 class App {
 
     constructor () {
@@ -90,9 +92,13 @@ class App {
         xhttp.onreadystatechange=function() {
             if (this.readyState == 4 && this.status == 200) {
                 let res = JSON.parse(this.responseText);
-                document.querySelector('.article-loading').style.display = 'none';
-                document.querySelector('.article-title').innerHTML = res.title;
-                document.querySelector('.article-content').innerHTML = res.text;
+                document.title = pageTitle + ' | '+res.title;
+
+                setTimeout(()=>{
+                    document.querySelector('.article-loading').style.display = 'none';
+                    document.querySelector('.article-title').innerHTML = res.title;
+                    document.querySelector('.article-content').innerHTML = res.text;
+                },300)
             }
         };
         xhttp.open("GET", "/getTextByUniqueUrl/" + uniqueUrl, true);
@@ -148,7 +154,9 @@ class App {
 
                 }
                 
-                document.querySelector('.articles-loading').style.display = 'none';
+                setTimeout(()=>{
+                    document.querySelector('.articles-loading').style.display = 'none';
+                },300)
 
                 that.initializeDocumentsList();
 
@@ -208,7 +216,10 @@ class App {
 
                 }
                 
-                document.querySelector('.articles-loading').style.display = 'none';
+                setTimeout(()=>{
+                    document.querySelector('.articles-loading').style.display = 'none';
+                },300)
+
                 that.initializeDocumentsList();
             }
         };

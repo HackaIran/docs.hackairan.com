@@ -42,6 +42,7 @@ appController.index = function (req, res) {
 
         //returning result
         res.render('index', {
+            title: 'HackaDocs',
             documents: documents,
             categories: categories,
             tags: tags
