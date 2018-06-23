@@ -45,7 +45,8 @@ appController.index = function (req, res) {
             title: 'HackaDocs',
             documents: documents,
             categories: categories,
-            tags: tags
+            tags: tags,
+            selectedItem: req.params.uniqueUrl || false
         })
 
     });

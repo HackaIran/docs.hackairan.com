@@ -6,7 +6,7 @@ const summaryValidator = [
     validate({
       validator: 'isLength',
       arguments: [30, 250],
-      message: 'Summary should be between 50 and 250 characters'
+      message: 'Summary should be between 30 and 250 characters'
     })
   ];
 

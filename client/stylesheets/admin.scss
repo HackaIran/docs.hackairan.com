@@ -440,6 +440,8 @@ nav {
             height: 90px;
             line-height: 30px;
             text-align: center;
+            word-wrap: break-word;
+            max-width: 90%;
 
         }
         & > .actions{
@@ -808,6 +810,10 @@ nav {
         background: slategrey;
     }
 
+}
+
+h1{
+    text-align: center;
 }
 
 

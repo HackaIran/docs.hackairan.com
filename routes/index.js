@@ -25,6 +25,9 @@ const setGeneralRouters = function () {
   //GET index
   router.get( '/', appController.index );
 
+  //GET index with selected document
+  router.get( '/doc/:uniqueUrl' , appController.index)
+
   //GET Document text by uniqueUrl
   router.get( '/getTextByUniqueUrl/:uniqueUrl', appController.getTextByUniqueUrl )
 

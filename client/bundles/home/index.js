@@ -8,6 +8,12 @@ class App {
         this.initializeHotKeys();
         this.initializeCategories();
         this.initializeTags();
+        this.selectedDocument = document.querySelector('.selectedDocument').value;
+        if(this.selectedDocument){
+            this.selectDocument(this.selectedDocument);
+            this.loadDocument(this.selectedDocument);
+        }
+        
     }
 
     initializeHotKeys () {
@@ -92,8 +98,8 @@ class App {
         xhttp.onreadystatechange=function() {
             if (this.readyState == 4 && this.status == 200) {
                 let res = JSON.parse(this.responseText);
-                document.title = pageTitle + ' | '+res.title;
-
+                let newTitle = pageTitle + ' | '+res.title; 
+                window.history.pushState("", newTitle, "/doc/"+uniqueUrl);
                 setTimeout(()=>{
                     document.querySelector('.article-loading').style.display = 'none';
                     document.querySelector('.article-title').innerHTML = res.title;
