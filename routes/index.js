@@ -8,12 +8,12 @@ const setGeneralRouters = function () {
 
   //Render Login
   router.get( '/login', function( req, res, err){
-    res.render('user/login')
+    res.render('user/login', {title: 'Login'})
   });
 
   //Render Register
   router.get( '/register', function( req, res, err){
-    res.render('user/register', { message: 'signUp'})
+    res.render('user/register', { title: 'Register'})
   });
   
   // route for register action

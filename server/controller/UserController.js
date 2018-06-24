@@ -28,7 +28,7 @@ userController.home = function(req, res) {
         }
         
         // otherwise it renders home view
-        res.render('user/home', { user: req.user, url: 'home', title: 'Home', userDocs: userDocuments });
+        res.render('user/home', { user: req.user, url: 'home', title: 'Panel', userDocs: userDocuments });
     });
 
     
@@ -86,7 +86,7 @@ userController.createDocument = function(req, res) {
         }else{
 
             // otherwise it renders new presentation view
-            res.render('user/createDocument', { user: req.user , error: null, categories: result });
+            res.render('user/createDocument', { user: req.user , error: null, categories: result, title:'Create new document' });
         
         }
 
@@ -154,7 +154,7 @@ userController.editDocument = function(req, res){
         if(err){ return res.render('error') }
 
         // otherwise it renders new presentation view
-        res.render('user/editDocument', { user: req.user, document: result});
+        res.render('user/editDocument', { user: req.user, document: result, title:'Edit '+result.name});
 
     })
     
@@ -264,7 +264,7 @@ userController.categories = function(req, res){
 
         }
 
-        res.render('user/categories', {categories: categories});
+        res.render('user/categories', {categories: categories, user: req.user, title:'Categories'});
 
     })
 }
