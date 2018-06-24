@@ -8,9 +8,9 @@ block content
             label
             textarea(name='text', placeholder='Paste md text here')= document.text 
             label
-            textarea(name='summary', placeholder='Enter summary here').summary= document.summary
+            input(name='summary', placeholder='Enter summary here' value=document.summary ).summary
             label
-            input(type='hidden', name='uniqueUrl', placeholder='Enter Unique Path, Like: how-volcano-works' value=document.uniqueUrl).u-url
+            input(type='hidden', name='uniqueUrl' value=document.uniqueUrl).u-url
             label
             button.submit Save
     
