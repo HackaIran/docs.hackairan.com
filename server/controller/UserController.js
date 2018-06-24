@@ -31,8 +31,6 @@ userController.home = function(req, res) {
         res.render('user/home', { user: req.user, url: 'home', title: 'Panel', userDocs: userDocuments });
     });
 
-    
-
 };
 
 // Post registration

@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const User = require('../model/User');
 const Category = require('../model/Category');
 const moment = require('moment');
-const showdown = require('showdown');
+const Remarkable = require('remarkable');
+const md = new Remarkable('full');
 
 appController.index = function (req, res) {
 
@@ -63,11 +64,10 @@ appController.getTextByUniqueUrl = function (req, res) {
                 text: ''
             })
         } else {
-            let converter = new showdown.Converter();
             res.json({
                 status: 200,
                 title: result.name,
-                text: converter.makeHtml(result.text)
+                text: md.render(result.text)
             })
         }
     })
