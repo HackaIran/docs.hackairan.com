@@ -1,0 +1,45 @@
+* {
+    font-family: 'Fira Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background: rgb(255, 61, 87);
+
+    & > .container{
+        position: fixed;
+        width: 60%;
+        height: 34%;
+        top: calc(50% - 17%);
+        left: calc(50% - 30%);
+        text-align: center;
+
+        & > .header{
+
+            font-size: 100px;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            display: inline-block;
+
+        }
+
+        & > .body{
+            & > .message{
+                color: white;
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            & > .back-home{
+                text-decoration: none;
+                cursor: pointer;
+                color: white;
+                margin-top: 20px;
+            }
+        }
+
+    }
+
+}
