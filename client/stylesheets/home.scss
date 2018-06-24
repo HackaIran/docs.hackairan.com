@@ -50,57 +50,76 @@ body {
             &:hover {
                 background: rgba(0, 0, 0, 0.1);
             }
+
+            
         }
 
-        &.categories li {
+        &.categories {
 
-            // Licon book (https://github.com/siamak/licon/blob/master/sass/_licon.scss) line 237
-            $size: 12px;
-            $basecolor: grey;
-            $left: 28px;
-            &:before{
-                content: ' ';
-                position: absolute;
-                width: $size - $size/4;
-                height: $size - $size/16;
-                border: $size/16 solid $basecolor;
-                border-radius: ceil($size/6) 0 0 ceil($size/6);
-                left: $left;
-                top: 50%;
-                transform: translateY(-50%);
+            & > li{
+                // Licon book (https://github.com/siamak/licon/blob/master/sass/_licon.scss) line 237
+                $size: 12px;
+                $basecolor: grey;
+                $left: 28px;
+                &:before{
+                    content: ' ';
+                    position: absolute;
+                    width: $size - $size/4;
+                    height: $size - $size/16;
+                    border: $size/16 solid $basecolor;
+                    border-radius: ceil($size/6) 0 0 ceil($size/6);
+                    left: $left;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+                &:after{
+                    content: ' ';
+                    position: absolute;
+                    width: $size/2;
+                    height: 1px;
+                    background: $basecolor;
+                    left: $left + $size/4;
+                    top: calc(50% - 3px);
+                    box-shadow: 0 4px 0 grey, 0 6px 0 grey;
+                    transform: translateY(-50%);
+                }
             }
-            &:after{
-                content: ' ';
-                position: absolute;
-                width: $size/2;
-                height: 1px;
-                background: $basecolor;
-                left: $left + $size/4;
-                top: calc(50% - 3px);
-                box-shadow: 0 4px 0 grey, 0 6px 0 grey;
-                transform: translateY(-50%);
+
+            & > .active{
+                background: darken($color: #333, $amount: 10%);
             }
             
         }
 
-        &.hashtags li {
+        &.hashtags {
+            & > li {
+                &:before, &:after {
+                    content: ' ';
+                    top: 50%;
+                    left: 30px;
+                    transform: translate(-50%, -50%);
+                    position: absolute;
+                    width: 5px;
+                    height: 12px;
+                    border-right: 1px solid grey;
+                    border-left: 1px solid grey;
+                }
 
-            &:before, &:after {
-                content: ' ';
-                top: 50%;
-                left: 30px;
-                transform: translate(-50%, -50%);
-                position: absolute;
-                width: 5px;
-                height: 12px;
-                border-right: 1px solid grey;
-                border-left: 1px solid grey;
+                &:after {
+                    transform: translate(-50%, -50%) rotate(90deg);
+                }
             }
 
-            &:after {
-                transform: translate(-50%, -50%) rotate(90deg);
+            & > .active{
+                background: darken($color: #333, $amount: 5%);
             }
 
+        }
+
+        &.categories{
+            & > .active{
+                background: darken($color: #333, $amount: 5%)
+            }
         }
     }
 }

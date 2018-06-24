@@ -47,8 +47,21 @@ class App {
     initializeCategories(){
         const that = this;
         let categories = document.querySelectorAll('.categories > li')
+        let tags = document.querySelectorAll('.hashtags > li')
+
         for(let item of categories){
             item.onclick = function(){
+
+                for(let tag of tags){
+                    tag.classList.remove('active');
+                }
+                
+                for(let cat of categories){
+                    cat.classList.remove('active');
+                }
+
+                item.classList.add('active')
+
                 let _id = this.getAttribute('data-id');
                 document.querySelector('.articles-loading').style.display = 'block';
                 that.filterByCategory(_id)
@@ -58,9 +71,19 @@ class App {
 
     initializeTags(){
         const that = this;
+        let categories = document.querySelectorAll('.categories > li')
         let tags = document.querySelectorAll('.hashtags > li')
         for(let item of tags){
             item.onclick = function(){
+                for(let tag of tags){
+                    tag.classList.remove('active');
+                }
+
+                for(let cat of categories){
+                    cat.classList.remove('active');
+                }
+
+                item.classList.add('active')
                 let name = this.innerHTML;
                 document.querySelector('.articles-loading').style.display = 'block';
                 that.filterByTag(name)
