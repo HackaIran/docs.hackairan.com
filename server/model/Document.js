@@ -13,8 +13,8 @@ const summaryValidator = [
 const uniqueUrlValidator = [
     validate({
       validator: 'isLength',
-      arguments: [5, 25],
-      message: 'Url should be between 5 and 25 characters'
+      arguments: [5, 40],
+      message: 'Url should be between 5 and 40 characters'
     }),
     validate({
         validator: value => value.split(' ').length < 2,
