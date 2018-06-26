@@ -1,3 +1,13 @@
+var editor = monaco.editor.create(document.getElementById('container'), {
+    value: [
+        '',
+        '# Paste or write your md here.',
+        ''
+    ].join('\n'),
+    language: 'markdown',
+    // theme: 'vs-dark'
+});
+
 var submitBtn = document.querySelector('.submit')
 submitBtn.onclick = function(event){
     submitBtn.style.background = 'orange';
@@ -39,5 +49,6 @@ submitBtn.onclick = function(event){
     const text = document.getElementsByName('text')[0].value
     const summary = document.getElementsByName('summary')[0].value
 
-    xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&category="+category+"&text="+text+"&summary="+summary); 
+    xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&category="+category+"&text="+editor.getValue()+"&summary="+summary); 
 }
+

@@ -1,5 +1,8 @@
 extends layout
 
+block header
+    link(rel="stylesheet", data-name="vs/editor/editor.main", href="/vs/editor/editor.main.css")
+
 block content
     .create-document-form
         .form
@@ -9,7 +12,7 @@ block content
             select(name="category" placeholder="select category")
                 -for(let i  = 0; i < categories.length; i++)
                     option(value=categories[i]._id)=categories[i].title 
-            textarea(name='text', placeholder='Paste md text here')
+            div(name='text', placeholder='Paste md text here' id='container')
             label
             input(name='summary', placeholder='Enter summary here').summary
             label
@@ -17,5 +20,14 @@ block content
             label
             button.submit Create
     
+block scripts
+    script
+        | var require = { paths: { 'vs': '../vs' } }
+    script(src="/vs/loader.js")
+    script(src="/vs/editor/editor.main.nls.js")
+    script(src="/vs/editor/editor.main.js")
     script(src="/javascripts/admin-create-doc.bundle.js")
+
+    
+
 
