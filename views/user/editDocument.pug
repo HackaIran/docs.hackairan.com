@@ -1,18 +1,27 @@
 extends layout
 
+block header
+    link(rel="stylesheet", data-name="vs/editor/editor.main", href="/vs/editor/editor.main.css")
+
 block content
     .create-document-form
         .form
             h2="Edit "+document.name
             input(type='text', name='name', placeholder='Enter title' value=document.name)
             label
-            textarea(name='text', placeholder='Paste md text here')= document.text 
+            textarea(name='text', placeholder='Paste md text here' id='container')= document.text 
             label
             input(name='summary', placeholder='Enter summary here' value=document.summary ).summary
             label
             input(type='hidden', name='uniqueUrl' value=document.uniqueUrl).u-url
             label
             button.submit Save
-    
+
+block scripts
+    script
+        | var require = { paths: { 'vs': '../vs' } }
+    script(src="/vs/loader.js")
+    script(src="/vs/editor/editor.main.nls.js")
+    script(src="/vs/editor/editor.main.js")
     script(src="/javascripts/admin-edit-doc.bundle.js")
 
