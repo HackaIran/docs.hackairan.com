@@ -9,7 +9,8 @@ block content
             h2="Edit "+document.name
             input(type='text', name='name', placeholder='Enter title' value=document.name)
             label
-            textarea(name='text', placeholder='Paste md text here' id='container')= document.text 
+            div(name='text', placeholder='Paste md text here' id='container')
+            input(type="hidden", value=document.text id='container-text')
             label
             input(name='summary', placeholder='Enter summary here' value=document.summary ).summary
             label
@@ -19,7 +20,7 @@ block content
 
 block scripts
     script
-        | var require = { paths: { 'vs': '../vs' } }
+        | var require = { paths: { 'vs': '/vs' } }
     script(src="/vs/loader.js")
     script(src="/vs/editor/editor.main.nls.js")
     script(src="/vs/editor/editor.main.js")

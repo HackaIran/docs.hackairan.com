@@ -1,9 +1,5 @@
 var editor = monaco.editor.create(document.getElementById('container'), {
-    value: [
-        '',
-        '# Paste or write your md here.',
-        ''
-    ].join('\n'),
+    value: document.getElementById('container-text').value,
     language: 'markdown',
     // theme: 'vs-dark'
 });
