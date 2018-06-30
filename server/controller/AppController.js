@@ -8,8 +8,16 @@ const Remarkable = require('remarkable');
 const md = new Remarkable('full');
 const Tag = require('../model/Tag');
 
-appController.index = function (req, res) {
+appController.index = async function (req, res) {
 
+    let selectedUUrl = req.params.uniqueUrl || false;
+    if(selectedUUrl){
+        let ifExist = await Document.findOne({uniqueUrl: selectedUUrl})
+        if(!ifExist){
+            selectedUUrl = false;
+        }
+    }
+    
     Promise.all([
         Document.find({isActive: true}).populate('author').populate('category'),
         Category.find({isActive: true}),
@@ -48,7 +56,7 @@ appController.index = function (req, res) {
             documents: documents,
             categories: categories,
             tags: tags,
-            selectedItem: req.params.uniqueUrl || false
+            selectedItem: selectedUUrl
         })
 
     });
