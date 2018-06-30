@@ -5,6 +5,7 @@ var User = require("../model/User");
 var Document = require('../model/Document');
 var Category = require('../model/Category');
 var DocumentArchive = require('../model/DocumentArchive');
+var Tag = require('../model/Tag');
 const extractTags = require('../helper/extractor');
 
 
@@ -101,19 +102,7 @@ userController.doCreateDocument = async function(req, res){
 
     let contentTags = extractTags(req.body.text);
 
-    let isDuplicate = await  Document.findOne({uniqueUrl: req.body.uniqueUrl})
-
-    if(isDuplicate){
-
-        res.json({status: 201, text: {
-            errors:{uniqueUrl:{message:`Unique Path ${req.body.uniqueUrl} is already defined by someone.`} }
-        }})
-        
-        return;
-
-    }
-
-    
+    let isError = false;
 
     // create new document if logged in
     let newDocument = new Document(
@@ -128,18 +117,61 @@ userController.doCreateDocument = async function(req, res){
         }
     );
 
-    newDocument.save(function(err, result){
+    await newDocument.save(function(err, result){
         if(err)
         {
-            res.json({status: 201, text: err})
-        }else{
-            res.json({
-                status: 200,
-                text: ''
-            });
+            return res.json({status: 201, text: err})
         }
     })
 
+    let docId = '';
+
+    Document.findOne({uniqueUrl: req.body.uniqueUrl},function(err, result){
+        console.log('result',result)
+        docId = result._id;
+    })
+
+    for(let foundTag of contentTags){
+        let tag = await Tag.findOne({tagName: foundTag ,isActive: true});
+        if(tag){
+            Tag.findOne({tagName: foundTag ,isActive: true},function(err, result){
+                if(err){
+                    console.log(err);
+                    isError = true;
+                }else{
+                    let tagDocs = result.documents || [];
+                    tagDocs.push(docId);
+                    Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs},function(error){
+                        console.log(error);
+                    })
+                }
+            })
+        }else{
+            // create new tag if logged in
+            let newTag = new Tag(
+                {
+                    tagName: foundTag,
+                    documents: [docId]
+                }
+            );
+
+            newTag.save(function(err, result){
+                if(err)
+                {
+                    console.log(err);
+                    isError = true;
+                }
+            })
+        }
+    }
+
+    if(isError){
+        return res.json({status: 201, text: {errors:{text:{message:`There was some errors with used hashtags`} }}});
+    }else{
+        res.json({
+            status: 200,
+        });
+    }
 };
 
 //renders edit Document page
@@ -159,12 +191,16 @@ userController.editDocument = function(req, res){
 }
 
 //edits document
-userController.doEditDocument = function(req, res){
+userController.doEditDocument = async function(req, res){
     
     // redirects to /login if user hasn't logged in yet
     if (!req.isAuthenticated()) return res.redirect('/login');
 
     let contentTags = extractTags(req.body.text);
+
+    let isError = false;
+
+    let docId = '';
 
     Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},
         {
@@ -176,19 +212,53 @@ userController.doEditDocument = function(req, res){
         }
     ,{ runValidators: true }
     ,function(err, doc){
-        if(!err){
-            res.json({
-                status: 200,
-            });
+        if(err){
+            return res.json({status: 500, text: err});
         }else{
-            res.json({
-                status: 500,
-                text: err
-            });
+            docId = doc._id;
         }
     });
+    for(let foundTag of contentTags){
+        let tag = await Tag.findOne({tagName: foundTag ,isActive: true});
+        if(tag){
+            Tag.findOne({tagName: foundTag ,isActive: true},function(err, result){
+                if(err){
+                    console.log(err);
+                    isError = true;
+                }else{
+                    let tagDocs = result.documents || [];
+                    tagDocs.push(docId);
+                    Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs},function(error){
+                        console.log(error);
+                    })
+                }
+            })
+        }else{
+            // create new tag if logged in
+            let newTag = new Tag(
+                {
+                    tagName: foundTag,
+                    documents: [docId]
+                }
+            );
 
-    
+            newTag.save(function(err, result){
+                if(err)
+                {
+                    console.log(err);
+                    isError = true;
+                }
+            })
+        }
+    }
+
+    if(isError){
+        return res.json({status: 201, text: {errors:{text:{message:`There was some errors with used hashtags`} }}});
+    }else{
+        res.json({
+            status: 200,
+        });
+    }
 }
 
 //delete document

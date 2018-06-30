@@ -11,10 +11,9 @@ const tagSchema = db.Schema({
         type: Boolean,
         default: true
     },
-    usedCount: {
-        required: true,
-        type: Number,
-        default: 0
+    documents: {
+        type: [String],
+        default: []
     }
 });
 
