@@ -140,10 +140,12 @@ userController.doCreateDocument = async function(req, res){
                     isError = true;
                 }else{
                     let tagDocs = result.documents || [];
-                    tagDocs.push(docId);
-                    Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs},function(error){
-                        console.log(error);
-                    })
+                    if(!tagDocs.includs(docId)){
+                        tagDocs.push(docId);
+                        Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs},function(error){
+                            if(error) console.log('error',error); else console.log('tag modified')
+                        })
+                    }
                 }
             })
         }else{
@@ -227,10 +229,13 @@ userController.doEditDocument = async function(req, res){
                     isError = true;
                 }else{
                     let tagDocs = result.documents || [];
-                    tagDocs.push(docId);
-                    Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs},function(error){
-                        console.log(error);
-                    })
+                    
+                    if(!tagDocs.includs(docId)){
+                        tagDocs.push(docId);
+                        Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs},function(error){
+                            console.log(error);
+                        })
+                    }
                 }
             })
         }else{
@@ -273,6 +278,22 @@ userController.deleteDocument = function(req, res){
                 status: 500
             })
         }else{
+            let documentTags = document.tags;
+            for(let documentTag of documentTags){
+                Tag.findOne({tagName: documentTag},function(err, result){
+                    let tagDocs = result.documents;
+                    let tagDocIndex = tagDocs.indexOf(document._id);
+                    if(tagDocIndex != -1){
+                        tagDocs.splice(tagDocIndex, 1)
+                    }
+                    Tag.findOneAndUpdate({tagName: documentTag},{documents: tagDocs},function(err){
+                        if(err){
+                            return res.json({status: 501})
+                        }
+                    })
+                })
+            }
+
             let duplicateDoc = JSON.parse(JSON.stringify(document))
             duplicateDoc._id = mongoose.Types.ObjectId();
             var newDocumentArchive = new DocumentArchive(duplicateDoc);
@@ -293,7 +314,6 @@ userController.deleteDocument = function(req, res){
                         }
                         
                     })
-                    
                 }
             })            
         }
