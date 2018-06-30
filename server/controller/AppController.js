@@ -6,13 +6,15 @@ const Category = require('../model/Category');
 const moment = require('moment');
 const Remarkable = require('remarkable');
 const md = new Remarkable('full');
+const Tag = require('../model/Tag');
 
 appController.index = function (req, res) {
 
     Promise.all([
         Document.find({isActive: true}).populate('author').populate('category'),
         Category.find({isActive: true}),
-    ]).then(([documentResult , categoryResult]) => {
+        Tag.find({isActive: true,})
+    ]).then(([documentResult , categoryResult, tagResult]) => {
         
         //handling Documents
         let documents = [];
@@ -26,15 +28,14 @@ appController.index = function (req, res) {
                 summary: item.summary,
                 modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
             })
-            if(item.tags){
-                for(let newTag of item.tags){
-                    if(tags.indexOf(newTag) == -1){
-                        tags.push(newTag)
-                    }
-                }
-            }
         }
         
+        for(let tagItem of tagResult){
+            if(tagItem.documents.length != 0){
+                tags.push(tagItem.tagName);
+            }
+        }
+
         //handling Categories and tags
         let categories = [];
         for(let item of categoryResult){
