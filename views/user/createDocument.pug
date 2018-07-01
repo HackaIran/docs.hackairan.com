@@ -12,7 +12,14 @@ block content
             select(name="category" placeholder="select category")
                 -for(let i  = 0; i < categories.length; i++)
                     option(value=categories[i]._id)=categories[i].title 
-            div(name='text', placeholder='Paste md text here' id='container')
+            label
+            .content-container
+                .container-props
+                    span.resizer
+                        img(src="/icons/expand.svg", alt="expand")
+                    span.theme
+                        img(src="/icons/black.svg", alt="theme")
+                div(name='text', placeholder='Paste md text here' id='container')
             label
             input(name='summary', placeholder='Enter summary here').summary
             label

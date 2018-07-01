@@ -116,12 +116,42 @@ nav {
         }
     }
 
-    #container{
-        margin: 10px;
-        height: 400px;
-        width: 80%;
-        display: block;
-        margin-top: 30px;
+    .content-container{
+        position: relative;
+        .container-props{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 100px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+
+            & > span{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #555;
+                border-radius: 15px;
+                margin-left: 15px;
+                width: 30px;
+                height: 30px;
+                & > img{
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+
+        }
+        & > #container{
+            margin: 10px;
+            height: 400px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
     }
 
     // textarea {
