@@ -52,3 +52,15 @@ submitBtn.onclick = function(event){
     xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&category="+category+"&text="+editor.getValue()+"&summary="+summary); 
 }
 
+let themeBtn = document.querySelector('.theme'); 
+themeBtn.onclick= function(){
+    if (themeBtn.getAttribute('data-current')== 'vs'){
+        monaco.editor.setTheme('vs-dark');
+        themeBtn.setAttribute('data-current', 'vs-dark');
+        themeBtn.childNodes[0].setAttribute('src','/icons/white.svg')
+    }else{
+        monaco.editor.setTheme('vs');
+        themeBtn.childNodes[0].setAttribute('src','/icons/black.svg')
+        themeBtn.setAttribute('data-current', 'vs')
+    }
+}
