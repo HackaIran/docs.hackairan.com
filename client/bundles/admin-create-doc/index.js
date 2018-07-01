@@ -53,7 +53,7 @@ submitBtn.onclick = function(event){
 }
 
 let themeBtn = document.querySelector('.theme'); 
-themeBtn.onclick= function(){
+themeBtn.onclick = function(){
     if (themeBtn.getAttribute('data-current')== 'vs'){
         monaco.editor.setTheme('vs-dark');
         themeBtn.setAttribute('data-current', 'vs-dark');
@@ -63,4 +63,24 @@ themeBtn.onclick= function(){
         themeBtn.childNodes[0].setAttribute('src','/icons/black.svg')
         themeBtn.setAttribute('data-current', 'vs')
     }
+}
+
+let contentValue = editor.getValue();
+let expandBtn = document.querySelector('.resizer')
+expandBtn.onclick = function(){
+    let container = document.getElementById('container');
+    container.style.margin = '0';
+    container.innerHTML = '';
+    container.style.height = '100%';
+    let editorContainer = document.querySelector('.content-container');
+    editorContainer.style.position = 'fixed';
+    editorContainer.style.width = '100%';
+    editorContainer.style.height = '100%';
+    editorContainer.style.top = '0';
+    editorContainer.style.left = '0';
+    var newEditor = monaco.editor.create(container, {
+        value: editor.getValue(),
+        language: 'markdown',
+        theme: themeBtn.getAttribute('data-current')
+    });
 }
