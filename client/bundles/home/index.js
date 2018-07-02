@@ -127,7 +127,7 @@ class App {
         xhttp.onreadystatechange=function() {
             if (this.readyState == 4 && this.status == 200) {
                 let res = JSON.parse(this.responseText);
-                let newTitle = pageTitle + ' | '+res.title; 
+                let newTitle = pageTitle + ' | '+res.title;
                 window.history.pushState("", newTitle, "/doc/"+uniqueUrl);
                 setTimeout(()=>{
                     document.querySelector('.article-loading').style.display = 'none';
@@ -151,6 +151,9 @@ class App {
                 for(let item of res){
 
                     let newDoc = document.createElement('li');
+                    if (item.uniqueUrl === that.selectedDocument) {
+                        newDoc.classList.add('active');
+                    }
 
                     let newDocTitle = document.createElement('h3')
                     let newDocTitleText = document.createTextNode(item.name)
@@ -185,8 +188,6 @@ class App {
 
                     document.querySelector('.column.titles > ul').appendChild(newDoc);
 
-                    
-
                 }
                 
                 setTimeout(()=>{
@@ -213,6 +214,9 @@ class App {
                 for(let item of res){
 
                     let newDoc = document.createElement('li');
+                    if (item.uniqueUrl === that.selectedDocument) {
+                        newDoc.classList.add('active');
+                    }
 
                     let newDocTitle = document.createElement('h3')
                     let newDocTitleText = document.createTextNode(item.name)
