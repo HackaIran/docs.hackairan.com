@@ -45,7 +45,7 @@ submitBtn.onclick = function(event){
     const text = editor.getValue();
     const summary = document.getElementsByName('summary')[0].value
 
-    xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&text="+text+"&summary="+summary); 
+    xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&text="+editor.getValue()+"&summary="+summary); 
 }
 
 let themeBtn = document.querySelector('.theme'); 

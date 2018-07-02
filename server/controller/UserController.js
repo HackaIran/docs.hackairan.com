@@ -126,30 +126,26 @@ userController.doCreateDocument = async function(req, res){
 
     let docId = '';
 
-    Document.findOne({uniqueUrl: req.body.uniqueUrl},function(err, result){
+    await Document.findOne({uniqueUrl: req.body.uniqueUrl},function(err, result){
         console.log('result',result)
         docId = result._id;
     })
 
     for(let foundTag of contentTags){
-        let tag = await Tag.findOne({tagName: foundTag ,isActive: true});
-        if(tag){
-            Tag.findOne({tagName: foundTag ,isActive: true},function(err, result){
-                if(err){
-                    console.log(err);
-                    isError = true;
-                }else{
-                    let tagDocs = result.documents || [];
-                    if(!tagDocs.includs(docId)){
-                        tagDocs.push(docId);
-                        Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs},function(error){
-                            if(error) console.log('error',error); else console.log('tag modified')
-                        })
-                    }
+        let result = await Tag.findOne({tagName: foundTag ,isActive: true});
+        if(result){
+            if(!result){
+                console.log('err',err);
+                isError = true;
+            }else{
+                let tagDocs = result.documents || [];
+                if(tagDocs.indexOf(docId) == -1){
+                    tagDocs.push(docId);
+                    console.log('tagDocs',tagDocs)
+                    await Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs})
                 }
-            })
+            }
         }else{
-            // create new tag if logged in
             let newTag = new Tag(
                 {
                     tagName: foundTag,
@@ -204,7 +200,7 @@ userController.doEditDocument = async function(req, res){
 
     let docId = '';
 
-    Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},
+    const doc = await Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},
         {
             name: req.body.name,
             summary: req.body.summary,
@@ -212,34 +208,28 @@ userController.doEditDocument = async function(req, res){
             modifiedAt: Date.now(),
             tags: contentTags
         }
-    ,{ runValidators: true }
-    ,function(err, doc){
-        if(err){
-            return res.json({status: 500, text: err});
-        }else{
-            docId = doc._id;
-        }
-    });
+    ,{ runValidators: true });
+    if(doc){
+        docId = doc._id;        
+    }else{
+        return res.json({status: 500, text: "Sorry, we've got some error."});
+    }
+
     for(let foundTag of contentTags){
-        let tag = await Tag.findOne({tagName: foundTag ,isActive: true});
-        if(tag){
-            Tag.findOne({tagName: foundTag ,isActive: true},function(err, result){
-                if(err){
-                    console.log(err);
-                    isError = true;
-                }else{
-                    let tagDocs = result.documents || [];
-                    
-                    if(!tagDocs.includs(docId)){
-                        tagDocs.push(docId);
-                        Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs},function(error){
-                            console.log(error);
-                        })
-                    }
+        let result = await Tag.findOne({tagName: foundTag ,isActive: true});
+        if(result){
+            if(!result){
+                console.log('err',err);
+                isError = true;
+            }else{
+                let tagDocs = result.documents || [];
+                if(tagDocs.indexOf(docId) == -1){
+                    tagDocs.push(docId);
+                    console.log('tagDocs',tagDocs)
+                    await Tag.findOneAndUpdate({tagName: foundTag ,isActive: true}, {documents: tagDocs})
                 }
-            })
+            }
         }else{
-            // create new tag if logged in
             let newTag = new Tag(
                 {
                     tagName: foundTag,
