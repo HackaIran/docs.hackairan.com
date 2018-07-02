@@ -13,7 +13,12 @@ class App {
             this.selectDocument(this.selectedDocument);
             this.loadDocument(this.selectedDocument);
         }
-        
+        this.rememberColumnsPreview();
+    }
+
+    rememberColumnsPreview () {
+        const type = localStorage['docs-columns'];
+        if (type) this.columnsPreview(type);
     }
 
     initializeHotKeys () {
@@ -28,6 +33,7 @@ class App {
     columnsPreview (type) {
         for (let i = 1; i <= 3; i++) $('body').classList.remove('divide-' + i);
         $('body').classList.add('divide-' + type);
+        localStorage['docs-columns'] = type;
     }
 
     initializeDocumentsList () {
