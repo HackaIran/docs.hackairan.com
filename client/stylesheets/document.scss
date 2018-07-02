@@ -1,0 +1,59 @@
+@import 'colors.scss';
+
+/**
+
+    Headings and Titles
+
+*/
+h1, h2, h3, h4, h5, h6 {
+    color: $primary-color;
+    font-weight: 500;
+}
+h1 {
+    font-size: 32px;
+}
+h2 {
+    font-size: 26px;
+    border-left: 3px solid $primary-color;
+    padding-left: 10px;
+    position: relative;
+    left: -13px;
+}
+h3 {
+    font-size: 23px;
+}
+h4 {
+    font-size: 20px;
+}
+h5 {
+    font-size: 18px;
+}
+h6 {
+    font-size: 16px;
+}
+
+/**
+
+    Inline styling
+    
+*/
+em {
+    color: #777;
+}
+a {
+    color: $primary-color;
+
+    em {
+        color: $primary-color;
+    }
+}
+blockquote {
+    border-left: 5px solid $primary-color;
+    padding: 5px 20px;
+    padding-right: 0;
+    margin-left: 10px;
+}
+p {
+    font-weight: 300;
+    line-height: 25px;
+}
