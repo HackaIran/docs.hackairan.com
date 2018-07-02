@@ -60,3 +60,44 @@ themeBtn.onclick= function(){
         themeBtn.setAttribute('data-current', 'vs')
     }
 }
+
+
+var newEditor;
+let expandBtn = document.querySelector('.resizer')
+expandBtn.onclick = function(){
+    let container = document.getElementById('container');
+    if (expandBtn.getAttribute('data-current') == 0){
+        expandBtn.setAttribute('data-current', 1);
+        expandBtn.childNodes[0].setAttribute('src','/icons/unexpand.svg')
+        container.style.margin = '0';
+        container.innerHTML = '';
+        container.style.height = '100%';
+        let editorContainer = document.querySelector('.content-container');
+        editorContainer.style.position = 'fixed';
+        editorContainer.style.width = '100%';
+        editorContainer.style.height = '100%';
+        editorContainer.style.top = '0';
+        editorContainer.style.left = '0';
+        newEditor = monaco.editor.create(container, {
+            value: editor.getValue(),
+            language: 'markdown',
+            theme: themeBtn.getAttribute('data-current')
+        });
+    }else{
+        expandBtn.childNodes[0].setAttribute('src','/icons/expand.svg')
+        expandBtn.setAttribute('data-current', 0)
+        container.style.margin = '10px';
+        container.style.marginTop = '30px';
+        container.innerHTML = '';
+        container.style.height = '400px';
+        let editorContainer = document.querySelector('.content-container');
+        editorContainer.style.position = 'relative';
+        editorContainer.style.width = '100%';
+        editorContainer.style.height = '400px';
+        editor = monaco.editor.create(container, {
+            value: newEditor.getValue(),
+            language: 'markdown',
+            theme: themeBtn.getAttribute('data-current')
+        });
+    }
+}

@@ -66,7 +66,6 @@ themeBtn.onclick = function(){
 }
 
 var newEditor;
-var reverseEditor;
 let expandBtn = document.querySelector('.resizer')
 expandBtn.onclick = function(){
     let container = document.getElementById('container');
