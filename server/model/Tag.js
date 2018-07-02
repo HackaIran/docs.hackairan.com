@@ -12,8 +12,7 @@ const tagSchema = db.Schema({
         default: true
     },
     documents: {
-        type: [String],
-        default: []
+        type: [String]
     }
 });
 
