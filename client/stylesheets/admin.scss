@@ -86,7 +86,7 @@ nav {
         border: none;
         width: 400px;
         padding: 15px;
-        margin: 10px;
+        margin: 10px 0;
         margin-top: 30px;
         outline: none;
         transition-duration: 0.5s;
@@ -107,7 +107,6 @@ nav {
         border: none;
         width: 250px;
         padding: 15px;
-        margin: 10px;
         margin-top: 30px;
         outline: none;
 
@@ -147,10 +146,17 @@ nav {
 
         }
         & > #container{
-            margin: 10px;
-            height: 400px;
+            margin: 10px 0;
+            height: 450px;
             width: 100%;
             margin-top: 30px;
+            margin-bottom: 80px;
+
+            & > .monaco-editor{
+                box-sizing: border-box;
+                padding-top: 50px;
+            }
+
         }
 
     }
@@ -229,7 +235,7 @@ nav {
         border: none;
         width: 200px;
         padding: 15px;
-        margin: 10px;
+        margin: 10px 0;
         outline: none;
         transition-duration: 0.5s;
 
@@ -274,7 +280,7 @@ nav {
             background: #CCC;
             border: none;
             padding: 2%;
-            margin: 10px;
+            margin: 10px 0;
             outline: none;
             transition-duration: 0.5s;
             align-self: stretch;
@@ -291,7 +297,7 @@ nav {
         }
         
         button {
-            margin: 10px;
+            margin: 10px 0;
             align-self: flex-start;
         }
     }
