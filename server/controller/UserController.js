@@ -389,6 +389,7 @@ userController.doAddCategory = function(req, res){
     newCategory.save(function(err, result){
         if(err)
         {
+            console.log(err);
             res.json({status: 201, text: err})
         }else{
             res.json({

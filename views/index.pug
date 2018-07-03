@@ -11,11 +11,13 @@ block content
 
     h4 Categories
     ul.categories
+      li.active(data-id='-', data-all='true') All
       -for(let item of categories)
         li(data-id=item._id)=item.title
 
     h4 Tags
     ul.hashtags
+      li.active(data-id='-', data-all='true') All
       -for(let item of tags)
         li=item
 

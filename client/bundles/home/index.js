@@ -1,3 +1,4 @@
+const axios = require('axios');
 const pageTitle = document.title;
 
 class App {
@@ -8,6 +9,10 @@ class App {
         this.initializeHotKeys();
         this.initializeCategories();
         this.initializeTags();
+        this.filters = {
+            category: 'all',
+            tag: 'all'
+        }
         this.selectedDocument = document.querySelector('.selectedDocument').value;
         if(this.selectedDocument){
             this.selectDocument(this.selectedDocument);
@@ -60,6 +65,9 @@ class App {
 
                 for(let tag of tags){
                     tag.classList.remove('active');
+                    if (tag.getAttribute('data-all') === 'true') {
+                        tag.classList.add('active');
+                    }
                 }
                 
                 for(let cat of categories){
@@ -70,7 +78,10 @@ class App {
 
                 let _id = this.getAttribute('data-id');
                 document.querySelector('.articles-loading').style.display = 'block';
-                that.filterByCategory(_id)
+                if (item.getAttribute('data-all') === 'true') _id = '-';
+                that.filters.category = _id;
+                that.filters.tags = 'all';
+                that.filter()
             }
         }
     }
@@ -84,15 +95,12 @@ class App {
                 for(let tag of tags){
                     tag.classList.remove('active');
                 }
-
-                for(let cat of categories){
-                    cat.classList.remove('active');
-                }
-
                 item.classList.add('active')
                 let name = this.innerHTML;
+                if (item.getAttribute('data-all') === 'true') name = '-'; 
                 document.querySelector('.articles-loading').style.display = 'block';
-                that.filterByTag(name)
+                that.filters.tags = name;
+                that.filter()
             }
         }
     }
@@ -140,130 +148,59 @@ class App {
         xhttp.send();
     }
 
-    filterByCategory(_id){
-        var xhttp = new XMLHttpRequest();
-        let that = this;
-        xhttp.onreadystatechange=function() {
-            if (this.readyState == 4 && this.status == 200) {
-                let res = JSON.parse(this.responseText);
-                document.querySelector('.column.titles > ul').innerHTML = '';
+    async filter (filters) {
+        if (filters.category) this.filters.category = filters.category;
+        if (filters.tags) this.filters.tags = filters.tags;
 
-                for(let item of res){
+        const res = axios(`/filter/${this.filters.category}/${this.filters.tags}`);
+        document.querySelector('.column.titles > ul').innerHTML = '';
 
-                    let newDoc = document.createElement('li');
-                    if (item.uniqueUrl === that.selectedDocument) {
-                        newDoc.classList.add('active');
-                    }
+        for(let item of res){
 
-                    let newDocTitle = document.createElement('h3')
-                    let newDocTitleText = document.createTextNode(item.name)
-                    newDocTitle.appendChild(newDocTitleText);
-
-                    let newDocDetails = document.createElement('span')
-
-                    let newDocDateTime = document.createElement('time')
-                    let newDocDateTimeData = document.createTextNode(item.modifiedAt)
-                    newDocDateTime.appendChild(newDocDateTimeData);
-
-                    let newDocDetailSeprator = document.createElement('span')
-                    let newDocDSData = document.createTextNode(' | ')
-                    newDocDetailSeprator.appendChild(newDocDSData);
-
-                    let newDocAuthor = document.createElement('span')
-                    let newDocAuthorData = document.createTextNode(item.author)
-                    newDocAuthor.appendChild(newDocAuthorData);
-
-                    newDocDetails.appendChild(newDocDateTime);
-                    newDocDetails.appendChild(newDocDetailSeprator);
-                    newDocDetails.appendChild(newDocAuthor);
-
-                    let newDocSummary = document.createElement('p');
-                    let newDocSummaryData = document.createTextNode(item.summary);
-                    newDocSummary.appendChild(newDocSummaryData);
-
-                    newDoc.appendChild(newDocTitle)
-                    newDoc.appendChild(newDocDetails)
-                    newDoc.appendChild(newDocSummary)
-                    newDoc.setAttribute('data-id', item.uniqueUrl)
-
-                    document.querySelector('.column.titles > ul').appendChild(newDoc);
-
-                }
-                
-                setTimeout(()=>{
-                    document.querySelector('.articles-loading').style.display = 'none';
-                },300)
-
-                that.initializeDocumentsList();
-
+            let newDoc = document.createElement('li');
+            if (item.uniqueUrl === that.selectedDocument) {
+                newDoc.classList.add('active');
             }
-        };
-        xhttp.open("GET", "/category/" + _id, true);
-        xhttp.send();
-    }
 
-    filterByTag(tagName){
+            let newDocTitle = document.createElement('h3')
+            let newDocTitleText = document.createTextNode(item.name)
+            newDocTitle.appendChild(newDocTitleText);
 
-        var xhttp = new XMLHttpRequest();
-        let that = this
-        xhttp.onreadystatechange=function() {
-            if (this.readyState == 4 && this.status == 200) {
-                let res = JSON.parse(this.responseText);
-                document.querySelector('.column.titles > ul').innerHTML = '';
+            let newDocDetails = document.createElement('span')
 
-                for(let item of res){
+            let newDocDateTime = document.createElement('time')
+            let newDocDateTimeData = document.createTextNode(item.modifiedAt)
+            newDocDateTime.appendChild(newDocDateTimeData);
 
-                    let newDoc = document.createElement('li');
-                    if (item.uniqueUrl === that.selectedDocument) {
-                        newDoc.classList.add('active');
-                    }
+            let newDocDetailSeprator = document.createElement('span')
+            let newDocDSData = document.createTextNode(' | ')
+            newDocDetailSeprator.appendChild(newDocDSData);
 
-                    let newDocTitle = document.createElement('h3')
-                    let newDocTitleText = document.createTextNode(item.name)
-                    newDocTitle.appendChild(newDocTitleText);
+            let newDocAuthor = document.createElement('span')
+            let newDocAuthorData = document.createTextNode(item.author)
+            newDocAuthor.appendChild(newDocAuthorData);
 
-                    let newDocDetails = document.createElement('span')
+            newDocDetails.appendChild(newDocDateTime);
+            newDocDetails.appendChild(newDocDetailSeprator);
+            newDocDetails.appendChild(newDocAuthor);
 
-                    let newDocDateTime = document.createElement('time')
-                    let newDocDateTimeData = document.createTextNode(item.modifiedAt)
-                    newDocDateTime.appendChild(newDocDateTimeData);
+            let newDocSummary = document.createElement('p');
+            let newDocSummaryData = document.createTextNode(item.summary);
+            newDocSummary.appendChild(newDocSummaryData);
 
-                    let newDocDetailSeprator = document.createElement('span')
-                    let newDocDSData = document.createTextNode(' | ')
-                    newDocDetailSeprator.appendChild(newDocDSData);
+            newDoc.appendChild(newDocTitle)
+            newDoc.appendChild(newDocDetails)
+            newDoc.appendChild(newDocSummary)
+            newDoc.setAttribute('data-id', item.uniqueUrl)
 
-                    let newDocAuthor = document.createElement('span')
-                    let newDocAuthorData = document.createTextNode(item.author)
-                    newDocAuthor.appendChild(newDocAuthorData);
+            document.querySelector('.column.titles > ul').appendChild(newDoc);
+        }
+        
+        setTimeout(()=>{
+            document.querySelector('.articles-loading').style.display = 'none';
+        },300)
 
-                    newDocDetails.appendChild(newDocDateTime);
-                    newDocDetails.appendChild(newDocDetailSeprator);
-                    newDocDetails.appendChild(newDocAuthor);
-
-                    let newDocSummary = document.createElement('p');
-                    let newDocSummaryData = document.createTextNode(item.summary);
-                    newDocSummary.appendChild(newDocSummaryData);
-
-                    newDoc.appendChild(newDocTitle)
-                    newDoc.appendChild(newDocDetails)
-                    newDoc.appendChild(newDocSummary)
-                    newDoc.setAttribute('data-id', item.uniqueUrl)
-
-                    document.querySelector('.column.titles > ul').appendChild(newDoc);
-
-                    
-
-                }
-                
-                setTimeout(()=>{
-                    document.querySelector('.articles-loading').style.display = 'none';
-                },300)
-
-                that.initializeDocumentsList();
-            }
-        };
-        xhttp.open("GET", "/tag/" + tagName, true);
-        xhttp.send();
+        that.initializeDocumentsList();
     }
 
 }
