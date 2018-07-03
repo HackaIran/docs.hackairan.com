@@ -114,13 +114,15 @@ body {
 
             & > .active{
                 background: darken($color: #333, $amount: 5%);
+                pointer-events: none;
             }
 
         }
 
         &.categories{
             & > .active{
-                background: darken($color: #333, $amount: 5%)
+                background: darken($color: #333, $amount: 5%);
+                pointer-events: none;
             }
         }
     }
@@ -188,6 +190,7 @@ body {
             &.active {
                 opacity: 1;
                 background: #FFF;
+                pointer-events: none;
                 &:before {
                     background: $primary-color;
                 }
