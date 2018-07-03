@@ -5,6 +5,7 @@ const User = require('../model/User');
 const Category = require('../model/Category');
 const moment = require('moment');
 const Remarkable = require('remarkable');
+const getHashtags = require('../helper/extractor');
 const md = new Remarkable('full');
 const Tag = require('../model/Tag');
 
@@ -76,7 +77,7 @@ appController.getTextByUniqueUrl = function (req, res) {
             res.json({
                 status: 200,
                 title: result.name,
-                text: md.render(result.text)
+                text: preProccessMd(md.render(result.text))
             })
         }
     })
@@ -129,6 +130,18 @@ appController.getDocumentsByTag = function(req, res){
         res.json(documents);
     });
     
+}
+
+const preProccessMd = (text) => {
+
+    // extracting hashtags
+    const hashtags = getHashtags(text);
+    for (let hashtag of hashtags) {
+        text = text.split('#' + hashtag);
+        text = text.join(`<span class="hashtag">#${ hashtag }</span>`);
+    }
+
+    return text;
 }
 
 module.exports = appController;
