@@ -1,12 +1,12 @@
 /* Extract hashtags text from string as an array */
 function getHashTags(inputText) {  
-    var regex = /#([A-z]|_|[\u0600-\u06FF]|[0-9])+/gm;
+    var regex = /\s#([A-z]|_|[\u0600-\u06FF]|[0-9])+/gm;
     var matches = [];
 
-    matches =  inputText.match(regex);
+    matches =  (' ' + inputText).match(regex);
 
     if(matches && matches.length > 0){
-        matches = matches.map(item => item.slice(1, item.length))
+        matches = matches.map(item => item.split("#")[1]);
         let unique_array = []
         for(let i = 0;i < matches.length; i++){
             if(unique_array.indexOf(matches[i]) == -1){
