@@ -10,8 +10,8 @@ class App {
         this.initializeCategories();
         this.initializeTags();
         this.filters = {
-            category: 'all',
-            tag: 'all'
+            category: '-',
+            tag: '-'
         }
         this.selectedDocument = document.querySelector('.selectedDocument').value;
         if(this.selectedDocument){
@@ -80,7 +80,7 @@ class App {
                 document.querySelector('.articles-loading').style.display = 'block';
                 if (item.getAttribute('data-all') === 'true') _id = '-';
                 that.filters.category = _id;
-                that.filters.tags = 'all';
+                that.filters.tags = '-';
                 that.filter()
             }
         }
@@ -148,17 +148,17 @@ class App {
         xhttp.send();
     }
 
-    async filter (filters) {
+    async filter (filters = {}) {
         if (filters.category) this.filters.category = filters.category;
         if (filters.tags) this.filters.tags = filters.tags;
 
-        const res = axios(`/filter/${this.filters.category}/${this.filters.tags}`);
+        const res = await axios(`/filter/${this.filters.category}/${this.filters.tags}`);
         document.querySelector('.column.titles > ul').innerHTML = '';
 
-        for(let item of res){
+        for(let item of res.data){
 
             let newDoc = document.createElement('li');
-            if (item.uniqueUrl === that.selectedDocument) {
+            if (item.uniqueUrl === this.selectedDocument) {
                 newDoc.classList.add('active');
             }
 
@@ -200,7 +200,7 @@ class App {
             document.querySelector('.articles-loading').style.display = 'none';
         },300)
 
-        that.initializeDocumentsList();
+        this.initializeDocumentsList();
     }
 
 }
