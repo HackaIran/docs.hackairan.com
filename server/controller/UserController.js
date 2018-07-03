@@ -224,12 +224,15 @@ userController.doEditDocument = async function(req, res){
     for(let foundTag of oldTags){
         if(contentTags.indexOf(foundTag) == -1){
             Tag.findOne({tagName: foundTag},function(err, result){
+                if(err){
+                    return res.json({status: 501})
+                }
                 let tagDocs = result.documents;
                 let tagDocIndex = tagDocs.indexOf(doc._id);
                 if(tagDocIndex != -1){
                     tagDocs.splice(tagDocIndex, 1)
                 }
-                Tag.findOneAndUpdate({tagName: documentTag},{documents: tagDocs},function(err){
+                Tag.findOneAndUpdate({tagName: foundTag},{documents: tagDocs},function(err){
                     if(err){
                         return res.json({status: 501})
                     }
