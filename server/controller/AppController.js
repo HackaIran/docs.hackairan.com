@@ -124,14 +124,27 @@ appController.filterDocuments = function(req, res){
                     }
                 }
             }else{
-                documents.push({
-                    uniqueUrl: item.uniqueUrl,
-                    name: item.name,
-                    author: item.author.fullName,
-                    category: item.category.title,
-                    summary: item.summary,
-                    modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
-                });
+                if(filterTag != '-'){
+                    if(item.tags.indexOf(filterTag) != -1){
+                        documents.push({
+                            uniqueUrl: item.uniqueUrl,
+                            name: item.name,
+                            author: item.author.fullName,
+                            category: item.category.title,
+                            summary: item.summary,
+                            modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+                        });
+                    }
+                }else{
+                    documents.push({
+                        uniqueUrl: item.uniqueUrl,
+                        name: item.name,
+                        author: item.author.fullName,
+                        category: item.category.title,
+                        summary: item.summary,
+                        modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+                    });
+                }
             }
         }
         res.json(documents);
