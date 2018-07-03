@@ -68,3 +68,18 @@ p {
         color: lighten($primary-color, 10%);
     }
 }
+
+/**
+
+    Lists
+
+*/
+ol, ul, li {
+    font-weight: 300;
+    line-height: 25px;
+    font-family: sans-serif, 'Segoe UI', Tahoma, Geneva, Verdana;
+}
+
+li {
+    margin-bottom: 25px;
+}
