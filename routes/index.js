@@ -23,22 +23,25 @@ const setGeneralRouters = function () {
   router.post('/login', userController.doLogin);  
 
   //GET index
-  router.get( '/', appController.index );
+  router.get('/', appController.index );
 
   //GET index with selected document
-  router.get( '/doc/:uniqueUrl' , appController.index)
+  router.get('/doc/:uniqueUrl' , appController.index)
 
   //GET Document text by uniqueUrl
-  router.get( '/getTextByUniqueUrl/:uniqueUrl', appController.getTextByUniqueUrl )
+  router.get('/getTextByUniqueUrl/:uniqueUrl', appController.getTextByUniqueUrl )
 
   //GET Author
-  router.get( '/author/:id', appController.getAuthor )
+  router.get('/author/:id', appController.getAuthor )
 
   //GET Documents by Category
   router.get('/category/:id', appController.getDocumentsByCategory )
 
   //GET Documents by Tag
   router.get('/tag/:tag', appController.getDocumentsByTag );
+
+  //GET Filter Document
+  router.get('/filter/:category/:tag', appController.filterDocuments );
 
 };
 

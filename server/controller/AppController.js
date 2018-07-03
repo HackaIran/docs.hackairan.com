@@ -93,6 +93,51 @@ appController.getAuthor = function (req, res) {
     });
 }
 
+appController.filterDocuments = function(req, res){
+    let documents = [];
+    let filterTag = req.params.tag;
+    let filterCategory = req.params.category;
+    Document.find({isActive: true}).populate('category').populate('author').exec(function(err, result){
+        for(let item of result){
+            if(filterCategory != '-'){
+                if(item.category._id == req.params.category){
+                    if(filterTag != '-'){
+                        if(item.tags.indexOf(filterTag) != -1){
+                            documents.push({
+                                uniqueUrl: item.uniqueUrl,
+                                name: item.name,
+                                author: item.author.fullName,
+                                category: item.category.title,
+                                summary: item.summary,
+                                modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+                            });
+                        }
+                    }else{
+                        documents.push({
+                            uniqueUrl: item.uniqueUrl,
+                            name: item.name,
+                            author: item.author.fullName,
+                            category: item.category.title,
+                            summary: item.summary,
+                            modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+                        });
+                    }
+                }
+            }else{
+                documents.push({
+                    uniqueUrl: item.uniqueUrl,
+                    name: item.name,
+                    author: item.author.fullName,
+                    category: item.category.title,
+                    summary: item.summary,
+                    modifiedAt: moment(item.modifiedAt).format('YYYY-MM-DD'),
+                });
+            }
+        }
+        res.json(documents);
+    });
+}
+
 appController.getDocumentsByCategory = function (req, res) {
     let documents = [];
     Document.find({isActive: true}).populate('category').populate('author').exec(function(err, result){
