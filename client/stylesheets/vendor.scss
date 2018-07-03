@@ -1,5 +1,12 @@
+@import 'colors.scss';
+
 * {
     font-family: 'Fira Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+*::selection {
+    background: $primary-color;
+    color: white;
 }
 
 body {
