@@ -199,6 +199,9 @@ const preProccessMd = (text) => {
         text = text.join(`<span class="hashtag">#${ hashtag }</span>`);
     }
 
+    // adding target="_blank" to links
+    text = text.split("<a ").join(`<a target="_blank" `);
+
     return text;
 }
 
