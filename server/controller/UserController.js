@@ -200,20 +200,44 @@ userController.doEditDocument = async function(req, res){
 
     let docId = '';
 
-    const doc = await Document.findOneAndUpdate({uniqueUrl: req.body.uniqueUrl},
-        {
-            name: req.body.name,
-            summary: req.body.summary,
-            text: req.body.text,
-            modifiedAt: Date.now(),
-            tags: contentTags
-        }
-    ,{ runValidators: true });
+    let oldTags = [];
+    
+    const doc = await Document.findOne({uniqueUrl: req.body.uniqueUrl});
     if(doc){
-        docId = doc._id;        
+        docId = doc._id;
+        oldTags = doc.tags;
+        doc.name= req.body.name;
+        doc.summary= req.body.summary;
+        doc.text= req.body.text;
+        doc.modifiedAt= Date.now();
+        doc.tags= contentTags;   
+        doc.save(function(err, result){
+            if(err)
+            {
+                return res.json({status: 500, text: "Sorry, we've got some error."})
+            }
+        })
     }else{
         return res.json({status: 500, text: "Sorry, we've got some error."});
     }
+
+    for(let foundTag of oldTags){
+        if(contentTags.indexOf(foundTag) == -1){
+            Tag.findOne({tagName: foundTag},function(err, result){
+                let tagDocs = result.documents;
+                let tagDocIndex = tagDocs.indexOf(doc._id);
+                if(tagDocIndex != -1){
+                    tagDocs.splice(tagDocIndex, 1)
+                }
+                Tag.findOneAndUpdate({tagName: documentTag},{documents: tagDocs},function(err){
+                    if(err){
+                        return res.json({status: 501})
+                    }
+                })
+            })
+        }
+    }
+
 
     for(let foundTag of contentTags){
         let result = await Tag.findOne({tagName: foundTag ,isActive: true});
@@ -296,13 +320,12 @@ userController.deleteDocument = function(req, res){
                         if(!err){
                             res.json({
                                 status: 200
-                            })    
+                            })
                         }else{
                             res.json({
                                 status: 502
                             })
                         }
-                        
                     })
                 }
             })            
