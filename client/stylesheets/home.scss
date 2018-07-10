@@ -15,7 +15,7 @@ body {
     background: #333;
     min-width: 200px;
     max-width: 200px;
-    transition-duration: 0.4s;
+    transition-duration: 0.2s;
     overflow: hidden;
 
     .header {
@@ -87,8 +87,8 @@ body {
                 }
             }
 
-            & > .active{
-                background: darken($color: #333, $amount: 10%);
+            & > .active {
+                background: rgba(0, 0, 0, 0.4);
             }
             
         }
@@ -112,8 +112,8 @@ body {
                 }
             }
 
-            & > .active{
-                background: darken($color: #333, $amount: 5%);
+            & > .active {
+                background: rgba(0, 0, 0, 0.4);
                 pointer-events: none;
             }
 
@@ -132,7 +132,7 @@ body {
     background: whitesmoke;
     min-width: 300px;
     max-width: 300px;
-    transition-duration: 0.4s;
+    transition-duration: 0.2s;
     border-right: 1px solid #DDD;
     display: flex;
     flex-direction: column;
@@ -266,6 +266,7 @@ body {
     flex-grow: 1;
     position: relative;
     overflow-y: scroll;
+    transition-duration: 0.2s;
 
     article {
         margin: auto;
@@ -331,11 +332,7 @@ body {
     }
 
     .day-night {
-        background-image: url(/images/icons/day.png);
-        
-        &.is-night {
-            background-image: url(/images/icons/night.png);
-        }
+        background-image: url(/images/icons/night.png);
     }
 }
 
@@ -347,4 +344,10 @@ body.divide-2 .column.tags {
 body.divide-1 .column.tags, body.divide-1 .column.titles {
     min-width: 0;
     max-width: 0;
+}
+
+
+
+body.is-night {
+    @import 'night-mode.scss';
 }

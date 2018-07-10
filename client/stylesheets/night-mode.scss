@@ -1,0 +1,106 @@
+$night-border-color: lighten($night-background-color, 5%);
+
+*::selection {
+    background: darken($night-background-color, 7%);
+}
+
+.option {
+    background-color: #656567;
+
+    &:hover {
+        background-color: lighten(#656567, 20%);
+    }
+}
+
+.option.day-night {
+    background-image: url(/images/icons/day.png);
+}
+
+.column.tags {
+    background: darken($night-background-color, 1%);
+}
+
+.column.titles {
+    background: darken($night-background-color, 3%);
+    border-color: $night-border-color;
+
+    .header {
+        border-color: $night-border-color;
+
+        input {
+            background: #656567;
+            color: whitesmoke;
+            border: $night-border-color;
+
+            &::-webkit-input-placeholder {
+                color: whitesmoke;
+            }
+            &::-moz-input-placeholder {
+                color: whitesmoke;
+            }
+            &::-ms-input-placeholder {
+                color: whitesmoke;
+            }
+            &::-o-input-placeholder {
+                color: whitesmoke;
+            }
+        }
+    }
+
+    ul li {
+        border-color: $night-border-color;
+        color: whitesmoke;
+
+        &:hover {
+            background: darken($night-border-color, 7%);
+        }
+
+        &.active {
+            background: $night-border-color;
+
+            &:before {
+                background: $night-primary-color;
+            }
+        }
+
+        & > span {
+            color: $night-primary-color;
+        }
+    }
+}
+
+.column.content {
+    background: darken($night-background-color, 6%);
+    color: whitesmoke;
+
+    blockquote {
+        border-left: 5px solid $night-primary-color;
+        background: linear-gradient(to right, $night-background-color, darken($night-background-color, 6%));
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $night-primary-color;
+        text-shadow: 0 0 5px transparentize(lighten($night-primary-color, 30%), 0.7);
+    }
+
+    h2 {
+        border-left: 3px solid $night-primary-color;
+    }
+
+    a {
+        color: $night-primary-color;
+    
+        em {
+            color: $night-primary-color;
+        }
+    }
+
+    .hashtag {
+        color: lighten($night-primary-color, 5%);
+        cursor: pointer;
+    
+        &:hover {
+            color: lighten($night-primary-color, 10%);
+        }
+    }
+}

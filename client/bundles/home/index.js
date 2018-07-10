@@ -4,21 +4,28 @@ const pageTitle = document.title;
 class App {
 
     constructor () {
+        this.filters = {
+            category: '-',
+            tag: '-'
+        }
         this.initializeSearchBox();
         this.initializeDocumentsList();
         this.initializeHotKeys();
         this.initializeCategories();
         this.initializeTags();
-        this.filters = {
-            category: '-',
-            tag: '-'
-        }
+        this.initializeOptions();
         this.selectedDocument = document.querySelector('.selectedDocument').value;
         if(this.selectedDocument){
             this.selectDocument(this.selectedDocument);
             this.loadDocument(this.selectedDocument);
         }
         this.rememberColumnsPreview();
+    }
+
+    initializeOptions () {
+        document.querySelector('.option.day-night').onclick = () => {
+            document.body.classList.toggle('is-night');
+        }
     }
 
     rememberColumnsPreview () {
