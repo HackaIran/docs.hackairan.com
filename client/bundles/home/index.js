@@ -23,6 +23,10 @@ class App {
     }
 
     initializeOptions () {
+        const hours = (new Date()).getHours();
+        if (hours > 19 || hours < 7) {
+            document.body.classList.add('is-night');
+        }
         document.querySelector('.option.day-night').onclick = () => {
             document.body.classList.toggle('is-night');
         }
