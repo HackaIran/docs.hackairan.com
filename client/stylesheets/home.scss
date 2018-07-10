@@ -302,6 +302,43 @@ body {
     }
 }
 
+.options {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    height: 30px;
+    display: flex;
+
+    .option {
+        width: 30px;
+        background-color: #FFF;
+        background-size: 60%;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-left: 5px;
+        border-radius: 3px;
+        transition-duration: 0.1s;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+
+        &:hover {
+            background-color: #EEE;
+        }
+
+        &:active {
+            opacity: 0.6;
+        }
+    }
+
+    .day-night {
+        background-image: url(/images/icons/day.png);
+        
+        &.is-night {
+            background-image: url(/images/icons/night.png);
+        }
+    }
+}
+
 body.divide-2 .column.tags {
     min-width: 0;
     max-width: 0;
