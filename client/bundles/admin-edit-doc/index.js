@@ -40,12 +40,12 @@ submitBtn.onclick = function(event){
             }
         }
     }
-    const name = document.getElementsByName('name')[0].value
-    const uniqueUrl = document.getElementsByName('uniqueUrl')[0].value
-    const text = editor.getValue();
-    const summary = document.getElementsByName('summary')[0].value
+    const name = document.getElementsByName('name')[0].value.split('&').join(':-a-:');
+    const uniqueUrl = document.getElementsByName('uniqueUrl')[0].value.split('&').join(':-a-:');
+    const text = editor.getValue().split('&').join(':-a-:');
+    const summary = document.getElementsByName('summary')[0].value.split('&').join(':-a-:');
 
-    xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&text="+editor.getValue()+"&summary="+summary); 
+    xhr.send("name="+name+"&uniqueUrl="+uniqueUrl+"&text="+text+"&summary="+summary); 
 }
 
 let themeBtn = document.querySelector('.theme'); 

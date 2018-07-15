@@ -107,12 +107,12 @@ userController.doCreateDocument = async function(req, res){
     // create new document if logged in
     let newDocument = new Document(
         {
-            uniqueUrl: req.body.uniqueUrl,
-            name: req.body.name,
+            uniqueUrl: req.body.uniqueUrl.split(':-a-:').join('&'),
+            name: req.body.name.split(':-a-:').join('&'),
             author: mongoose.Types.ObjectId(req.user._id),
             category: mongoose.Types.ObjectId(req.body.category),
-            summary: req.body.summary,
-            text: req.body.text,
+            summary: req.body.summary.split(':-a-:').join('&'),
+            text: req.body.text.split(':-a-:').join('&'),
             tags: contentTags
         }
     );
@@ -206,9 +206,9 @@ userController.doEditDocument = async function(req, res){
     if(doc){
         docId = doc._id;
         oldTags = doc.tags;
-        doc.name= req.body.name;
-        doc.summary= req.body.summary;
-        doc.text= req.body.text;
+        doc.name= req.body.name.split(':-a-:').join('&');
+        doc.summary= req.body.summary.split(':-a-:').join('&');
+        doc.text= req.body.text.split(':-a-:').join('&');
         doc.modifiedAt= Date.now();
         doc.tags= contentTags;   
         doc.save(function(err, result){
