@@ -15,6 +15,7 @@ class App {
         this.initializeCategories();
         this.initializeTags();
         this.initializeOptions();
+        this.initializeClickOptionMenu();
         this.selectedDocument = document.querySelector('.selectedDocument').value;
         if(this.selectedDocument){
             this.selectDocument(this.selectedDocument);
@@ -83,11 +84,40 @@ class App {
         })
     }
 
+    initializeClickOptionMenu(){
+
+        let direction = -1;
+        localStorage.setItem("direction", direction)
+        document.querySelector('.menu').onclick = ()=>{
+        
+            
+            
+            direction = localStorage.getItem("direction")
+            let current = parseInt(document.querySelector(".menu").innerHTML);
+            if(direction == -1){
+                document.querySelector(".menu").textContent = (current-1);
+                if((current-1)==1){
+                    localStorage.setItem("direction", 1);
+                }
+                this.columnsPreview(current-1);
+            }else{
+                document.querySelector(".menu").textContent = (current+1);
+                if((current+1)==3){
+                    localStorage.setItem("direction", -1);
+                }
+                this.columnsPreview(current+1);
+            
+            }
+
+        };
+
+    }
+
     columnsPreview (type) {
         for (let i = 1; i <= 3; i++) $('body').classList.remove('divide-' + i);
         $('body').classList.add('divide-' + type);
         // localStorage['docs-columns'] = type;
-        document.querySelector('.menu').textContent = type-1;
+        document.querySelector('.menu').textContent = type;
     }
 
     initializeDocumentsList () {
