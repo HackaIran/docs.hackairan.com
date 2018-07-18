@@ -8,6 +8,7 @@ class App {
             category: '-',
             tag: '-'
         }
+        this.watchForResize();
         this.initializeSearchBox();
         this.initializeDocumentsList();
         this.initializeHotKeys();
@@ -22,6 +23,42 @@ class App {
         this.rememberColumnsPreview();
     }
 
+    watchForResize(){
+
+        window.onload = ()=>{
+            this.chooseToCollapse();
+        }
+
+        window.onresize = ()=>{
+
+            this.chooseToCollapse();
+
+        }
+
+    }
+
+    chooseToCollapse(){
+
+        let windowWidth = window.innerWidth;
+        
+        if(windowWidth > 1100){
+
+            this.columnsPreview(3);
+
+        }else if(windowWidth < 1100 && windowWidth > 850){
+
+            this.columnsPreview(2);
+
+        }else if(windowWidth < 850){
+
+            this.columnsPreview(1);
+        
+        }
+
+    }
+
+
+
     initializeOptions () {
         const hours = (new Date()).getHours();
         if (hours > 19 || hours < 7) {
@@ -33,8 +70,8 @@ class App {
     }
 
     rememberColumnsPreview () {
-        const type = localStorage['docs-columns'];
-        if (type) this.columnsPreview(type);
+        // const type = localStorage['docs-columns'];
+        // if (type) this.columnsPreview(type);
     }
 
     initializeHotKeys () {
@@ -49,7 +86,8 @@ class App {
     columnsPreview (type) {
         for (let i = 1; i <= 3; i++) $('body').classList.remove('divide-' + i);
         $('body').classList.add('divide-' + type);
-        localStorage['docs-columns'] = type;
+        // localStorage['docs-columns'] = type;
+        document.querySelector('.menu').textContent = type-1;
     }
 
     initializeDocumentsList () {
