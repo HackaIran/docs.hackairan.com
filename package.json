@@ -7,7 +7,12 @@
     "start": "node ./bin/www",
     "start:watch": "nodemon ./bin/www",
     "bundle": "webpack",
-    "bundle:watch": "webpack --watch"
+    "bundle:watch": "webpack --watch",
+    "production:start": "pm2 start ./bin/www --name docs.hackairan.com",
+    "production:restart": "pm2 restart docs.hackairan.com",
+    "production:stop": "pm2 stop docs.hackairan.com",
+    "production:delete": "pm2 delete docs.hackairan.com",
+    "pull": "git pull && npm run production:restart"
   },
   "author": "HackaIran Team",
   "repository": {
