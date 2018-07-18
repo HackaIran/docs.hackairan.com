@@ -44,7 +44,7 @@ class App {
         
         if(windowWidth > 1100){
 
-            localStorage.setItem("direction", 1);
+            localStorage.setItem("direction", 2);
 
             this.columnsPreview(3);
 
