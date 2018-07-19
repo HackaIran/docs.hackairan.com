@@ -44,7 +44,7 @@ class App {
         
         if(windowWidth > 1100){
 
-            localStorage.setItem("direction", 2);
+            localStorage.setItem("direction", -1);
 
             this.columnsPreview(3);
 
@@ -93,10 +93,8 @@ class App {
         let direction = -1;
         localStorage.setItem("direction", direction)
         document.querySelector('.menu').onclick = ()=>{
-        
-            
-            
             direction = localStorage.getItem("direction")
+            console.log('direction',direction);
             let current = parseInt(document.querySelector(".menu").innerHTML);
             if(direction == -1){
                 document.querySelector(".menu").textContent = (current-1);
